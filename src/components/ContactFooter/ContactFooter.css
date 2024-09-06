@@ -1,0 +1,101 @@
+/* Contact Form Styles */
+.contact-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 50px;
+  }
+  
+  .contact-header {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 2rem;
+    color: #00ff00;
+    margin-bottom: 20px;
+  }
+  
+  .contact-form {
+    background-color: black;
+    padding: 20px;
+    border: 2px solid #00ff00;
+    transform: rotateX(5deg);
+    width: 350px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.6);
+    transition: all 0.3s ease;
+  }
+  
+  .contact-form:hover {
+    transform: rotateX(0deg) scale(1.05);
+  }
+  
+  .contact-label {
+    display: flex;
+    flex-direction: column;
+    color: #00ff00;
+    font-family: 'Courier New', Courier, monospace;
+    margin-bottom: 15px;
+  }
+  
+  .contact-input, .contact-textarea {
+    background-color: black;
+    border: none;
+    border-bottom: 1px solid #00ff00;
+    color: #00ff00;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1rem;
+    outline: none;
+    padding: 5px;
+  }
+  
+  .contact-input::placeholder, .contact-textarea::placeholder {
+    color: #00ff00;
+  }
+  
+  .submit-button {
+    background-color: black;
+    border: 2px solid #00ff00;
+    color: #00ff00;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 1rem;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .submit-button:hover {
+    background-color: #00ff00;
+    color: black;
+  }
+  
+  /* Footer Styles */
+  .footer-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: black;
+    padding: 20px;
+    border-top: 2px solid #00ff00;
+    margin-top: 50px;
+  }
+  
+  .footer-text {
+    font-family: 'Courier New', Courier, monospace;
+    color: #00ff00;
+    margin-bottom: 10px;
+  }
+  
+  .social-media-icons {
+    display: flex;
+    gap: 15px;
+  }
+  
+  .social-icon {
+    color: #00ff00;
+    font-family: 'Courier New', Courier, monospace;
+    text-decoration: none;
+    transition: color 0.3s ease;
+  }
+  
+  .social-icon:hover {
+    color: white;
+  }
+  

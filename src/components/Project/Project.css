@@ -1,0 +1,186 @@
+
+.projects-section {
+    padding: 0;
+    margin: 0 auto;
+    background-color: black; /* Black background for the section */
+    color: #0f0; /* Green text color */
+    width: 1200px; /* Set width as per requirement */
+  }
+  
+  .projects-section h1 {
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace; /* Terminal-like font */
+    font-size: 40px;
+    color: #fff;
+    margin-bottom: 40px;
+    font-weight: 600;
+    line-height: 60px;
+  }
+  
+  .projects-list {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 2 columns for larger screens */
+    gap: 32px;
+    padding: 30px;
+    list-style: none;
+    margin: 0;
+    width: 100%;
+  }
+  
+  .projects-list li {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  @media screen and (max-width: 991px) {
+    .projects-list {
+      grid-template-columns: 1fr; /* Single column for smaller screens */
+    }
+  }
+  .terminal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+  }
+  
+  .terminal-window {
+    background-color: black;
+    border: 2px solid green;
+    width: 80%;
+    height: 80%;
+    padding: 20px;
+    color: green;
+    box-shadow: 0px 0px 20px rgba(0, 255, 0, 0.6);
+    overflow-y: auto;
+  }
+  
+  .terminal-heading {
+    color: limegreen;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    border-bottom: 2px solid green;
+    padding-bottom: 10px;
+    animation: typing 2s steps(40, end), blink-caret 0.75s step-end infinite;
+  }
+  
+  /* Blinking caret effect */
+  @keyframes blink-caret {
+    from, to {
+      border-right-color: transparent;
+    }
+    50% {
+      border-right-color: limegreen;
+    }
+  }
+ /* General MS-DOS Aesthetic */
+body {
+    background-color: #000; /* Black background */
+    overflow-x: hidden; 
+    font-family: 'Courier New', Courier, monospace; /* Monospace for terminal look */
+  }
+  
+  .terminal-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+  }
+  
+  .terminal-window {
+    background-color: black;
+    border: 2px solid green;
+    width: 80%;
+    height: 80%;
+    padding: 20px;
+    color: green;
+    box-shadow: 0px 0px 20px rgba(0, 255, 0, 0.6);
+    overflow-y: auto;
+  }
+  
+  .terminal-heading {
+    color: limegreen;
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    border-bottom: 2px solid green;
+    padding-bottom: 10px;
+    animation: typing 2s steps(40, end), blink-caret 0.75s step-end infinite;
+  }
+  
+  /* Blinking caret effect */
+  @keyframes blink-caret {
+    from, to {
+      border-right-color: transparent;
+    }
+    50% {
+      border-right-color: limegreen;
+    }
+  }
+  
+  .terminal-output {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    font-size: 1.2em;
+  }
+  
+  .work-entry {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    position: relative;
+    padding: 10px;
+    background-color: rgba(0, 255, 0, 0.1);
+    box-shadow: 0px 0px 10px rgba(0, 255, 0, 0.2);
+    border-radius: 5px;
+    transform-style: preserve-3d;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .work-entry:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 0px 30px rgba(0, 255, 0, 0.4);
+  }
+  
+  /* Time and Title */
+  .work-entry time {
+    color: limegreen;
+    font-weight: bold;
+  }
+  
+  .work-entry span {
+    font-weight: bold;
+    color: green;
+    text-align: right;
+  }
+  
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+  
+  .terminal-output::before {
+    content: '> ';
+    animation: typing 1.5s steps(40, end);
+  }
+  
+  /* Add 3D Button and Card Effects */
+  .terminal-output {
+    perspective: 1000px;
+  }
+  
+  .work-entry {
+    transform: translateZ(0);
+  }
+  
+  .work-entry:hover {
+    transform: translateZ(20px);
+  }
+  

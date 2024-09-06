@@ -1,0 +1,85 @@
+/* SplashScreen.css */
+.splash-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+  }
+  
+  .splash-content {
+    text-align: center;
+  }
+  
+  .glitch {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 3rem;
+    color: #0f0; /* Classic MS-DOS green */
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .glitch::before,
+  .glitch::after {
+    content: 'Welcome to My Portfolio';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: #0f0;
+    clip: rect(0, 0, 0, 0);
+    animation: glitch-anim 1.5s infinite;
+  }
+  
+  .glitch::before {
+    left: 2px;
+    text-shadow: -1px 0 #ff00ff, 1px 0 #00ffff;
+    animation-delay: 0.1s;
+  }
+  
+  .glitch::after {
+    left: -2px;
+    text-shadow: -1px 0 #ff00ff, 1px 0 #00ffff;
+    animation-delay: 0.2s;
+  }
+  
+  @keyframes glitch-anim {
+    0% {
+      clip: rect(0, 0, 0, 0);
+    }
+    10% {
+      clip: rect(0, 100%, 0, 0);
+      transform: translate(-2px, -2px);
+    }
+    20% {
+      clip: rect(0, 0, 100%, 0);
+      transform: translate(2px, 2px);
+    }
+    30% {
+      clip: rect(0, 100%, 100%, 0);
+      transform: translate(-2px, -2px);
+    }
+    40% {
+      clip: rect(0, 0, 100%, 0);
+      transform: translate(2px, 2px);
+    }
+    50% {
+      clip: rect(0, 100%, 0, 0);
+      transform: translate(-2px, -2px);
+    }
+    60% {
+      clip: rect(0, 0, 0, 0);
+      transform: translate(2px, 2px);
+    }
+    100% {
+      clip: rect(0, 0, 0, 0);
+      transform: translate(0, 0);
+    }
+  }
+  

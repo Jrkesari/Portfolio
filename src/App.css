@@ -1,0 +1,61 @@
+@font-face {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.navbar {
+    position: fixed; /* Changed to fixed for a persistent navbar */
+    top: 10;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    font-size: 18px;
+    z-index: 1; /* Ensure navbar is on top */
+    background-color: #000; /* Background color for visibility */
+    color: #00ff00; /* Terminal green */
+    margin-top: 10px;
+}
+
+.logo {
+    margin-left: 20px;
+    font-weight: bold;
+    font-size: xx-large;
+}
+
+.nav-links {
+    display: flex;
+    align-items: center;
+    margin-right: 40px;
+}
+
+.nav-links span {
+    margin: 0 15px;
+    cursor: url('https://w7.pngwing.com/pngs/630/339/png-transparent-windows-cursor-hd-logo.png'), auto; /* Custom cursor */
+}
+
+.nav-links .blinking-cursor::before {
+    content: '->_'; /* Visible cursor */
+    animation: blink-caret 1s step-start infinite;
+    display: inline-block;
+    margin-left: 6px; /* Adjust spacing if needed */
+    font-size: 1.4rem; /* Increase font size if needed */
+}
+
+.navbar .logo::before {
+    content: '->_'; /* Visible cursor */
+    animation: blink-caret 1s step-start infinite;
+    display: inline-block;
+    margin-left: 6px; /* Adjust spacing if needed */
+    font-size: 1.8rem; /* Increase font size if needed */
+}
+
+@keyframes blink-caret {
+    50% {
+        opacity: 0;
+    }
+}
+
+.section {
+    padding: 60px; /* Padding to avoid overlap with fixed navbar */
+    min-height: 100vh; /* Full viewport height */
+}

@@ -1,0 +1,58 @@
+/* General MS-DOS Aesthetic */
+body {
+    background-color: #000; /* Black background */
+    overflow-y: auto; 
+    font-family: 'Courier New', Courier, monospace; /* Monospace for terminal look */
+  }
+ /* WorkExperience.css */
+
+.terminal-container {
+  font-family: 'Courier New', Courier, monospace;
+  background: #000;
+  color: #0f0;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 255, 0, 0.5);
+}
+
+.terminal-window {
+  border: 2px solid #0f0;
+  padding: 10px;
+  background: #111;
+  border-radius: 5px;
+  overflow-x: auto; /* Allows horizontal scrolling */
+}
+
+.terminal-heading {
+  margin: 0;
+  font-size: 1.5em;
+  white-space: nowrap;
+}
+
+.terminal-output {
+  margin-top: 10px;
+}
+
+.work-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+}
+
+.work-table th, .work-table td {
+  border: 1px solid #0f0;
+  padding: 8px;
+  text-align: left;
+}
+
+/* .work-table th {
+  background: #222;
+}
+
+.work-table tr:nth-child(even) {
+  background: #333;
+}
+
+.work-table tr:hover {
+  background: #444;
+} */
