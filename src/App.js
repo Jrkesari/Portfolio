@@ -43,7 +43,7 @@ function App() {
               <span onClick={() => handleScroll(projectsRef)} className="blinking-cursor">Projects</span>
               <span onClick={() => handleScroll(certificatesRef)} className="blinking-cursor">Certificates</span>
               <span onClick={() => handleScroll(contactRef)} className="blinking-cursor">Contact</span>
-              
+              <a href="resume.pdf" download className="resume-button">Resume</a> {/* Resume download button */}
             </div>
           </div>
 

@@ -1,3 +1,4 @@
+/* Existing styles */
 @font-face {
     font-family: 'Courier New', Courier, monospace;
 }
@@ -58,4 +59,24 @@
 .section {
     padding: 60px; /* Padding to avoid overlap with fixed navbar */
     min-height: 100vh; /* Full viewport height */
+}
+
+/* New styles for the resume button */
+.resume-button {
+    background-color: #333; /* Grey color */
+    color: #00ff00; /* Terminal green text */
+    border: 2px solid #00ff00; /* Green border */
+    padding: 5px 10px;
+    text-decoration: none;
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 16px;
+    border-radius: 5px;
+    margin-left: 20px;
+    display: inline-block;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.resume-button:hover {
+    background-color: #00ff00; /* Change background on hover */
+    color: #333; /* Change text color on hover */
 }
