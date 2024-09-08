@@ -1,72 +1,75 @@
-@font-face {
-  font-family: 'Courier New', Courier, monospace;
-}
-
 .landing-page {
   background-color: black;
-  color: #00ff00; /* Terminal green */
-  font-family: 'MS-DOS', monospace;
+  color: #00ff00;
   height: 100vh;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
+  perspective: 1200px; /* 3D depth effect */
   overflow: hidden;
-  cursor: url('https://w7.pngwing.com/pngs/630/339/png-transparent-windows-cursor-hd-logo.png'), auto; /* Ensure URL is correct */
 }
-
 
 .model-container {
   width: 80%;
   height: 80%;
-  position: relative; /* Ensure text overlay is positioned correctly */
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.1s ease-out;
+}
+
+.text-overlay, .text-overlay2, .text-overlay3, .text-overlay4 {
+  position: absolute;
+  color: #00ff00;
+  text-shadow: 0 0 10px rgba(0, 255, 0, 0.8);
+  pointer-events: none;
+  z-index: 1;
 }
 
 .text-overlay {
-  position: absolute;
-  top: 10px; /* Adjust as needed to position below the navbar */
-  left: 20px; /* Adjust as needed to position to the left */
-  color: #00ff00; /* Terminal green */
-  font-size: 3rem; /* Adjust as needed */
-  text-shadow: 0 0 10px rgba(0, 255, 0, 0.8); /* Glow effect */
-  z-index: 0; /* Ensure text is behind the model */
-  pointer-events: none; /* Make sure the text does not interfere with model interactions */
+  top: 10px;
+  left: 20px;
+  font-size: 3rem;
 }
+
 .text-overlay2 {
-  position: absolute;
-  bottom: 60px; /* Adjust as needed to position below the navbar */
-  right: 20px; /* Adjust as needed to position to the left */
-  color: #00ff00; /* Terminal green */
-  font-size: 1.5rem; /* Adjust as needed */
-  text-shadow: 0 0 10px rgba(0, 255, 0, 0.8); /* Glow effect */
-  z-index: 0; /* Ensure text is behind the model */
-  pointer-events: none; /* Make sure the text does not interfere with model interactions */
+  bottom: 60px;
+  right: 20px;
+  font-size: 1.5rem;
 }
 
 .text-overlay3 {
-  position: absolute;
-  top: 60px; /* Adjust as needed to position below the navbar */
-  right: 20px; /* Adjust as needed to position to the left */
-  color: #00ff00; /* Terminal green */
-  font-size: 1.5rem; /* Adjust as needed */
-  text-shadow: 0 0 10px rgba(0, 255, 0, 0.8); /* Glow effect */
-  z-index: 0; /* Ensure text is behind the model */
-  pointer-events: none; /* Make sure the text does not interfere with model interactions */
+  top: 60px;
+  right: 20px;
+  font-size: 1.5rem;
 }
 
 .text-overlay4 {
-  position: absolute;
-  bottom: 60px; /* Adjust as needed to position below the navbar */
-  left: 20px; /* Adjust as needed to position to the left */
-  color: #00ff00; /* Terminal green */
-  font-size: 1.5rem; /* Adjust as needed */
-  text-shadow: 0 0 10px rgba(0, 255, 0, 0.8); /* Glow effect */
-  z-index: 0; /* Ensure text is behind the model */
-  pointer-events: none; /* Make sure the text does not interfere with model interactions */
+  bottom: 60px;
+  left: 20px;
+  font-size: 1.5rem;
 }
-
 
 .canvas {
   width: 100%;
   height: 100%;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 768px) {
+  .text-overlay {
+    font-size: 2rem;
+  }
+  
+  .text-overlay2, .text-overlay3, .text-overlay4 {
+    font-size: 1rem;
+  }
+  
+  .model-container {
+    width: 90%;
+    height: 70%;
+  }
+  
+  .landing-page {
+    perspective: 800px;
+  }
 }

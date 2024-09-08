@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, useGLTF, PerspectiveCamera } from '@react-three/drei';
 import './LandingPage.css';
@@ -12,44 +12,34 @@ function Model() {
   );
 }
 
-function TextOverlay() {
+function TextOverlay({ className, text }) {
   return (
-    <div className="text-overlay">
-      <h1>What I am/do,</h1>
-    </div>
-  );
-}
-
-function TextOverlay2() {
-  return (
-    <div className="text-overlay2">
-      <h1>Web Developer</h1>
-    </div>
-  );
-}
-
-function TextOverlay3() {
-  return (
-    <div className="text-overlay3">
-      <h1>Data Science</h1>
-    </div>
-  );
-}
-
-function TextOverlay4() {
-  return (
-    <div className="text-overlay4">
-      <h1>Data Analyst</h1>
+    <div className={className}>
+      <h1>{text}</h1>
     </div>
   );
 }
 
 function LandingPage() {
+  const modelContainerRef = useRef(null);
+
+  // 3D effect on hover
+  const handleMouseMove = (e) => {
+    const container = modelContainerRef.current;
+    const xAxis = (window.innerWidth / 2 - e.pageX) / 50;  // Adjust for sensitivity
+    const yAxis = (window.innerHeight / 2 - e.pageY) / 50; // Adjust for sensitivity
+    container.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+  };
+
+  const handleMouseLeave = () => {
+    modelContainerRef.current.style.transform = `rotateY(0deg) rotateX(0deg)`; // Reset position
+  };
+
   return (
-    <div className="landing-page">
-      <div className="model-container">
-        <TextOverlay />
-        <TextOverlay3 />
+    <div className="landing-page" onMouseMove={handleMouseMove} onMouseLeave={handleMouseLeave}>
+      <div className="model-container" ref={modelContainerRef}>
+        <TextOverlay className="text-overlay" text="What I am/do," />
+        <TextOverlay className="text-overlay3" text="Data Science" />
         <Canvas className="canvas">
           <PerspectiveCamera makeDefault position={[0, 2, 5]} fov={75} />
           <OrbitControls
@@ -63,8 +53,8 @@ function LandingPage() {
           <spotLight position={[10, 10, 10]} angle={0.15} penumbra={1} />
           <Model />
         </Canvas>
-        <TextOverlay4 />
-        <TextOverlay2 />
+        <TextOverlay className="text-overlay4" text="Data Analyst" />
+        <TextOverlay className="text-overlay2" text="Web Developer" />
       </div>
     </div>
   );

@@ -1,85 +1,131 @@
 /* SplashScreen.css */
 .splash-screen {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 9999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background: linear-gradient(135deg, #001f3f, #0074D9); Gradient background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  perspective: 2000px; /* Increase depth for 3D effect */
+}
+
+.splash-content {
+  text-align: center;
+}
+
+.glitch {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 4rem;
+  color: #0f0; /* Classic MS-DOS green */
+  position: relative;
+  overflow: hidden;
+  perspective: 2500px;
+  animation: unique-zoom 3s cubic-bezier(0.88, -0.55, 0.27, 1.55) forwards;
+  text-shadow: 3px 3px 10px rgba(0, 255, 0, 0.7); /* Add shadow for depth */
+  text-shadow: 2px 0 #2d79ac, 1px 0 #00ffff;
+}
+
+/* Add a background area that the text zooms into */
+.background-target {
+  position: absolute;
+  width: 80%;
+  height: 80%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.7);
+  z-index: -1;
+}
+
+.glitch::before,
+.glitch::after {
+  content: 'Welcome to My Portfolio';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: #0f0;
+  clip: rect(0, 0, 0, 0);
+  animation: glitch-anim 4s infinite;
+}
+
+.glitch::before {
+  left: 2px;
+  text-shadow: 2px 0 #ff00ff, 1px 0 #00ffff;
+  animation-delay: 0.1s;
+}
+
+.glitch::after {
+  left: -2px;
+  text-shadow: -1px 0 #ff00ff, 1px 0 #00ffff;
+  animation-delay: 0.2s;
+}
+
+/* Unique 3D zoom and spin animation */
+@keyframes unique-zoom {
+  0% {
+    transform: scale(0) rotateY(360deg) translateZ(-200px); /* Starts invisible, spinning, zoomed out */
+    opacity: 0;
   }
-  
-  .splash-content {
-    text-align: center;
+  20% {
+    transform: scale(2) rotateY(-180deg) translateZ(50px);
+    opacity: 0.8;
   }
-  
-  .glitch {
-    font-family: 'Courier New', Courier, monospace;
-    font-size: 3rem;
-    color: #0f0; /* Classic MS-DOS green */
-    position: relative;
-    overflow: hidden;
+  40% {
+    /* transform: scale(1.2) rotateY(90deg) translateZ(200px); 
+    opacity: 0.8; */
   }
-  
-  .glitch::before,
-  .glitch::after {
-    content: 'Welcome to My Portfolio';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    color: #0f0;
+  60% {
+    transform: scale(1.5) rotateY(0deg) translateZ(100px); /* Bounces out slightly */
+    opacity: 1;
+  }
+  80% {
+    transform: scale(1) rotateY(-45deg) translateZ(0px);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1) rotateY(0deg) translateZ(0px); /* Ends flat and normal */
+    opacity: 1;
+  }
+}
+
+/* Glitch animation */
+@keyframes glitch-anim {
+  0% {
     clip: rect(0, 0, 0, 0);
-    animation: glitch-anim 1.5s infinite;
   }
-  
-  .glitch::before {
-    left: 2px;
-    text-shadow: -1px 0 #ff00ff, 1px 0 #00ffff;
-    animation-delay: 0.1s;
+  10% {
+    clip: rect(0, 100%, 0, 0);
+    transform: translate(-2px, -2px);
   }
-  
-  .glitch::after {
-    left: -2px;
-    text-shadow: -1px 0 #ff00ff, 1px 0 #00ffff;
-    animation-delay: 0.2s;
+  20% {
+    clip: rect(0, 0, 100%, 0);
+    transform: translate(2px, 2px);
   }
-  
-  @keyframes glitch-anim {
-    0% {
-      clip: rect(0, 0, 0, 0);
-    }
-    10% {
-      clip: rect(0, 100%, 0, 0);
-      transform: translate(-2px, -2px);
-    }
-    20% {
-      clip: rect(0, 0, 100%, 0);
-      transform: translate(2px, 2px);
-    }
-    30% {
-      clip: rect(0, 100%, 100%, 0);
-      transform: translate(-2px, -2px);
-    }
-    40% {
-      clip: rect(0, 0, 100%, 0);
-      transform: translate(2px, 2px);
-    }
-    50% {
-      clip: rect(0, 100%, 0, 0);
-      transform: translate(-2px, -2px);
-    }
-    60% {
-      clip: rect(0, 0, 0, 0);
-      transform: translate(2px, 2px);
-    }
-    100% {
-      clip: rect(0, 0, 0, 0);
-      transform: translate(0, 0);
-    }
+  30% {
+    clip: rect(0, 100%, 100%, 0);
+    transform: translate(-2px, -2px);
   }
-  
+  40% {
+    clip: rect(0, 0, 100%, 0);
+    transform: translate(2px, 2px);
+  }
+  50% {
+    clip: rect(0, 100%, 0, 0);
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    clip: rect(0, 0, 0, 0);
+    transform: translate(2px, 2px);
+  }
+  100% {
+    clip: rect(0, 0, 0, 0);
+    transform: translate(0, 0);
+  }
+}
