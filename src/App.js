@@ -5,6 +5,7 @@ import Projects from './components/Project/Project';
 import CertificatesAchievements from './components/CertificatesAchievements/CertificatesAchievements';
 import ContactMe from './components/ContactFooter/ContactFooter';
 import SplashScreen from './components/SplashScreen/SplashScreen';
+import SkillsPage from './components/Skills/Skills';
 import './App.css';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
   const projectsRef = useRef(null);
   const certificatesRef = useRef(null);
   const contactRef = useRef(null);
+  const skillsRef = useRef(null);
 
   // Scroll to a section
   const handleScroll = (sectionRef) => {
@@ -37,9 +39,11 @@ function App() {
             <div className="nav-links">
               <span onClick={() => handleScroll(homeRef)} className="blinking-cursor">Home</span>
               <span onClick={() => handleScroll(experienceRef)} className="blinking-cursor">Experience</span>
+              <span onClick={() => handleScroll(skillsRef)} className="blinking-cursor">Skills</span>
               <span onClick={() => handleScroll(projectsRef)} className="blinking-cursor">Projects</span>
               <span onClick={() => handleScroll(certificatesRef)} className="blinking-cursor">Certificates</span>
               <span onClick={() => handleScroll(contactRef)} className="blinking-cursor">Contact</span>
+              
             </div>
           </div>
 
@@ -50,6 +54,10 @@ function App() {
 
           <div className="section" id="experience" ref={experienceRef}>
             <WorkExperience />
+          </div>
+
+          <div className="section" id="skills" ref={skillsRef}>
+            <SkillsPage />
           </div>
 
           <div className="section" id="projects" ref={projectsRef}>

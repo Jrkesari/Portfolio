@@ -7,12 +7,12 @@ const projects = [
   {
     title: 'Airline Review Analysis',
     details: 'Analyzed airline reviews with Python, including sentiment analysis and visual insights. Summary provided actionable feedback for improving airline services.',
-    repoUrl: 'https://github.com/your-repo/Airline-Review-Analysis'
+    repoUrl: 'https://github.com/Jrkesari/Airline-Review-Analysis'
   },
   {
     title: 'E-Commerce Website (Front-end) using ReactJS',
     details: 'Developed a dynamic e-commerce site with ReactJS, featuring interactive elements, responsive design with Bootstrap, and smooth animations with Framer Motion.',
-    repoUrl: 'https://github.com/your-repo/E-Commerce-Website-ReactJS'
+    repoUrl: 'https://github.com/Jrkesari/E-Commerce-Website-ReactJS'
   },
   {
     title: 'AiReviewHub Developed using Spring Boot Framework',
@@ -50,7 +50,7 @@ const Projects = () => {
         >
           C:\Projects
         </motion.h1>
-
+        <div className="terminal-output">
       <ul className="projects-list">
         {projects.map((project, index) => (
           <li key={index}>
@@ -64,7 +64,7 @@ const Projects = () => {
       </ul>
     </div>
     </div>
-    
+    </div>    
   );
 };
 

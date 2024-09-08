@@ -6,27 +6,27 @@ const certificates = [
   {
     title: 'British Airways - Data Science Job Simulation',
     description: 'Issued by Forage in Aug 2024',
-    imgSrc: 'path/to/forage-logo.jpg',
+    imgSrc: 'british.png',
   },
   {
     title: 'AWS Academy Graduate - AWS Academy Cloud Architecting',
     description: 'Issued by Amazon Web Services in Dec 2023',
-    imgSrc: 'path/to/aws-academy-cloud-architecting.jpg',
+    imgSrc: 'awscloud2.png',
   },
   {
     title: 'AWS Academy Graduate - AWS Academy Cloud Foundations',
     description: 'Issued by Amazon Web Services in Oct 2023',
-    imgSrc: 'path/to/aws-academy-cloud-foundations.jpg',
+    imgSrc: 'awscloud.png',
   },
   {
     title: 'AWS Academy Graduate - AWS Academy Data Engineering',
     description: 'Issued by Amazon Web Services in Oct 2023',
-    imgSrc: 'path/to/aws-academy-data-engineering.jpg',
+    imgSrc: 'awsdata.png',
   },
   {
     title: 'Linux Fundamentals',
     description: 'Issued by Coursera in Aug 2023',
-    imgSrc: 'path/to/linux-fundamentals.jpg',
+    imgSrc: 'linux.png',
   },
 ];
 
@@ -35,17 +35,17 @@ const achievements = [
   {
     title: 'Academic Excellence Award Semester 1',
     description: 'Earned a perfect 10 CGPA in the first semester at Bennett University',
-    imgSrc: 'path/to/sem1-gradesheet.jpg',
+    imgSrc: 'sem1.jpeg',
   },
   {
     title: 'Academic Excellence Award Semester 2',
     description: 'Earned a 9.83 CGPA in the second semester at Bennett University',
-    imgSrc: 'path/to/sem2-marksheet.jpg',
+    imgSrc: '/Sem3.jpg',
   },
   {
     title: 'Academic Excellence Award Semester 3',
     description: 'Earned a 9.72 CGPA in the third semester at Bennett University',
-    imgSrc: 'path/to/sem3-marksheet.jpg',
+    imgSrc: '/Sem2.jpg',
   },
 ];
 
