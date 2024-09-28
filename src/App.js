@@ -33,7 +33,7 @@ function App() {
     <>
       {/* Google Meta Verification Tag */}
       <Helmet>
-        <meta name="google-site-verification" content="ly8PBtmKNZ95cBeX3kSWmRMTXStc_3tAyoveMVcAkAE" />
+      <meta name="google-site-verification" content="ly8PBtmKNZ95cBeX3kSWmRMTXStc_3tAyoveMVcAkAE" />
         <title>JRK's Portfolio</title>
       </Helmet>
 
