@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react'; // Import useRef and useState
+import { Helmet } from 'react-helmet'; // Import react-helmet
 import LandingPage from './components/LandingPage/LandingPage';
 import WorkExperience from './components/WorkExp/WorkExperience';
 import Projects from './components/Project/Project';
@@ -30,6 +31,12 @@ function App() {
 
   return (
     <>
+      {/* Google Meta Verification Tag */}
+      <Helmet>
+        <meta name="google-site-verification" content="ly8PBtmKNZ95cBeX3kSWmRMTXStc_3tAyoveMVcAkAE" />
+        <title>JRK's Portfolio</title>
+      </Helmet>
+
       {loading && <SplashScreen onLoadComplete={handleLoadComplete} />}
       {!loading && (
         <div>
