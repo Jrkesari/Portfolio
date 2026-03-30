@@ -5,14 +5,19 @@ export interface SkillGroup {
 
 export const skillGroups: SkillGroup[] = [
   {
-    label: "AI / ML",
+    label: "LLMs & Agents",
     skills: [
       "LangChain",
+      "LangGraph",
       "CrewAI",
       "MCP",
       "OpenAI API",
       "Azure OpenAI",
+      "Azure AI Studio",
       "Claude API",
+      "Google Gemini",
+      "Whisper",
+      "n8n",
       "FAISS",
       "RAG Systems",
       "Prompt Engineering",

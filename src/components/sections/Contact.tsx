@@ -14,11 +14,11 @@ export function Contact() {
       >
         <div className="max-w-xs space-y-4">
           <motion.p variants={fadeUp} className="text-[15px] text-[#171717] leading-relaxed">
-            AI agents and developer tools. Built for Netision Technology, and ongoing personal projects in automation, voice AI, and observability.
+            Building agents and developer tools at Netision Technology.
           </motion.p>
 
           <motion.p variants={fadeUp} className="text-[15px] text-[#171717] leading-relaxed">
-            Open to collaborations, freelance work, or just a conversation about AI.
+            Open to collaborations and freelance work.
           </motion.p>
 
           <motion.div variants={fadeUp}>

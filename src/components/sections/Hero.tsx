@@ -35,7 +35,7 @@ export function Hero() {
               Jayesh Ranjan Kesari
             </h1>
             <p className="text-base text-muted">
-              AI Engineer — Generative AI · Multi-Agent Systems · AI Automation
+              AI Engineer — Agents · Automation · LLMs
             </p>
           </motion.div>
 
@@ -43,10 +43,9 @@ export function Hero() {
             variants={fadeUp}
             className="text-[15px] text-gray-600 leading-relaxed max-w-lg"
           >
-            I build intelligent systems. Crafting AI agents and automation
-            pipelines that work reliably at scale. AI Engineer at{" "}
+            Building agents and automation pipelines at{" "}
             <span className="text-gray-900 font-medium">Netision Technology</span>
-            , building a multi-agent analytics platform.
+            . Currently working on a multi-agent analytics platform.
           </motion.p>
 
           <motion.div variants={fadeUp} className="flex items-center gap-5">
