@@ -42,8 +42,8 @@ export function Projects() {
                   onClick={() => setActiveFilter(f.value)}
                   className={`px-3 py-1 rounded-full text-xs font-medium transition-colors ${
                     activeFilter === f.value
-                      ? "bg-accent text-white"
-                      : "text-muted hover:text-gray-900"
+                      ? "bg-[#171717] text-[#F7F4EE]"
+                      : "text-muted hover:text-[#171717]"
                   }`}
                 >
                   {f.label}
