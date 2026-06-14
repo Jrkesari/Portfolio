@@ -34,25 +34,28 @@ const GLOBAL_PER_MIN = 120;
 // Hosts allowed to call this endpoint. Vercel injects the deploy URL; we also
 // allow the production domain and localhost for `vercel dev`. Extra origins can
 // be added via ALLOWED_ORIGINS (comma-separated) without a code change.
-function allowedHosts(): string[] {
-  const hosts = ["localhost", "127.0.0.1"];
-  if (process.env.VERCEL_URL) hosts.push(process.env.VERCEL_URL);
-  if (process.env.VERCEL_PROJECT_PRODUCTION_URL) hosts.push(process.env.VERCEL_PROJECT_PRODUCTION_URL);
+function extraAllowedHosts(): string[] {
+  // Explicit allowlist additions (custom domains) via env, comma-separated.
   const extra = process.env.ALLOWED_ORIGINS;
-  if (extra) hosts.push(...extra.split(",").map((s) => s.trim()).filter(Boolean));
-  return hosts;
+  return extra ? extra.split(",").map((s: string) => s.trim()).filter(Boolean) : [];
 }
 
 function originAllowed(req: any): boolean {
   const src = req.headers["origin"] || req.headers["referer"] || "";
-  if (!src) return false; // same-origin browser fetch always sends one of these
+  if (!src) return false; // a same-origin browser fetch always sends one of these
   let host: string;
   try {
     host = new URL(src).hostname;
   } catch {
     return false;
   }
-  return allowedHosts().some((h) => host === h || host.endsWith(`.${h}`) || h.endsWith(host));
+  // Local dev.
+  if (host === "localhost" || host === "127.0.0.1") return true;
+  // Any Vercel deploy of this project (production, preview, branch URLs all
+  // live under *.vercel.app).
+  if (host === "vercel.app" || host.endsWith(".vercel.app")) return true;
+  // Explicit custom domains.
+  return extraAllowedHosts().some((h) => host === h || host.endsWith(`.${h}`));
 }
 
 const SYSTEM_PROMPT =
@@ -191,7 +194,9 @@ export default async function handler(req: any, res: any) {
       return;
     }
 
-    const data = await upstream.json();
+    const data = (await upstream.json()) as {
+      choices?: { message?: { content?: string } }[];
+    };
     const output: string = data?.choices?.[0]?.message?.content ?? "";
 
     res.status(200).json({
