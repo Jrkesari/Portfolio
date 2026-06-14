@@ -10,19 +10,80 @@ export interface Project {
   github?: string;
   live?: string;
   highlight?: string;
+  /** Optional grouping label, e.g. the parent system a sub-project belongs to. */
+  group?: string;
 }
 
 export const projects: Project[] = [
   {
-    id: "nexus",
-    name: "Nexus",
+    id: "netigen",
+    name: "AI Agent Ecosystem",
     description:
-      "Enterprise business intelligence platform with natural language to SQL, custom graph generation, and multi-LLM support.",
+      "A multi-agent platform: four standalone backends coordinating only through a shared Convex state bus, behind a Next.js frontend. The umbrella the agents below plug into.",
     longDescription:
-      "Conversational analytics platform that converts natural language queries to validated SQL with a 4-stage graph visualization pipeline achieving 95%+ accuracy. Reduced token usage by 53.5% ($22,740/month savings) and query response time by 40% through intelligent caching.",
-    tech: ["FastAPI", "LangChain", "CrewAI", "DuckDB", "Azure OpenAI", "MCP", "Python"],
+      "Architected and built a multi-agent ecosystem of independently deployable backends that share nothing but a Convex state bus and a common 48-tool MCP server. Each surface owns its own pipeline; the frontend talks to each directly.",
+    tech: ["LangGraph", "MCP", "Convex", "FastAPI", "Next.js", "Python"],
     categories: ["ai", "web"],
-    highlight: "53.5% token reduction · $22,740/mo savings",
+    highlight: "4 backends · 48 MCP tools · multi-LLM",
+  },
+  {
+    id: "netigen-dock",
+    name: "Dock — Agentic Tool Router",
+    group: "Agent Ecosystem",
+    description:
+      "A LangGraph supervisor that routes a user query to the right MCP tools and custom sub-agents, with per-integration tool isolation enforced at request time.",
+    longDescription:
+      "Supervisor graph (supervisor → tool_caller → responder) that resolves an allowed-tool set per integration_id at request time, so each integration's LLM only ever sees the tools it's authorized for. Multi-provider LLM registry (Azure, NVIDIA NIM), async background pipeline that streams results into Convex.",
+    tech: ["LangGraph", "MCP", "FastAPI", "Convex", "Azure OpenAI", "Python"],
+    categories: ["ai"],
+    highlight: "LangGraph supervisor · 48 tools · RBAC isolation",
+  },
+  {
+    id: "power-agent",
+    name: "Power BI Agent — NL → DAX",
+    group: "Agent Ecosystem",
+    description:
+      "Natural-language questions over Power BI datasets: caches the semantic model, resolves entities against sampled values, generates and validates DAX, then renders Convex blocks.",
+    longDescription:
+      "Same approach as Power BI Copilot. Loads the semantic model once (XMLA INFO.VIEW + REST sampled values) into a cache, resolves dimension filter terms against sampled values with zero extra REST calls, generates DAX with DSPy + an LLM, validates and repairs invalid queries, executes via the Power BI executeQueries API, and formats Table/Card/FollowUp blocks the frontend renders reactively.",
+    tech: ["DSPy", "Power BI REST", "XMLA", "LangGraph", "Python"],
+    categories: ["ai"],
+    highlight: "Semantic-model cache · DAX gen + repair",
+  },
+  {
+    id: "netigen-desk",
+    name: "Desk — Desktop AI Coworker",
+    group: "Agent Ecosystem",
+    description:
+      "A local AI coworker that runs on the user's machine and executes tasks on their real files, driven through the cloud UI over a secure WebSocket bridge.",
+    longDescription:
+      "Local agent connected to the cloud platform via a secure WebSocket bridge. Users interact through the familiar cloud UI; the local agent executes on actual files and desktop, gated by confirmation/safety prompts and an MCP tool layer for extensibility.",
+    tech: ["WebSocket", "MCP", "Python", "Local Agent"],
+    categories: ["ai"],
+    highlight: "Runs on real files · confirmation gates",
+  },
+  {
+    id: "netigen-draft",
+    name: "Draft — Document Generator",
+    group: "Agent Ecosystem",
+    description:
+      "Skill-based document generation: takes a brief + a skill id, runs a structured pipeline, and pushes a renderable JSON spec to Convex.",
+    longDescription:
+      "Standalone backend that turns a user brief and a skill identifier into a renderable document spec. Sequential DraftGraph state machine (input parse → workspace load → memory load → generate), with per-session memory seeded from Convex and pushed back as block state.",
+    tech: ["LangGraph", "Convex", "SQLite", "FastAPI", "Python"],
+    categories: ["ai"],
+    highlight: "Skill pipeline · block-spec output",
+  },
+  {
+    id: "observability",
+    name: "Observability Platform",
+    description:
+      "End-to-end VM/server observability: Go telemetry agents, a datacenter collector, an agentless discovery scanner, and a multi-tenant FastAPI control plane on ClickHouse + Redpanda.",
+    longDescription:
+      "Built across multiple repos: a per-VM Go agent (WAL-buffered, mTLS gRPC), a datacenter collector hub, a single-binary probe, an agentless network discovery scanner (ping/port-scan/fingerprint + SSH/WMI/SNMP enrichment), and a FastAPI ingestion gateway + console API. Telemetry streams through Redpanda into ClickHouse; the query API is hardened with an async CH pool, two-layer caching, per-tenant concurrency/CPU-s budgets, JWT tenant isolation, and AES-256-GCM encryption of install credentials at rest.",
+    tech: ["Go", "FastAPI", "ClickHouse", "Redpanda", "OpenTelemetry", "gRPC", "Python"],
+    categories: ["web", "ai"],
+    highlight: "Go agents · multi-tenant · ClickHouse + Redpanda",
   },
   {
     id: "splitcash",
@@ -33,7 +94,6 @@ export const projects: Project[] = [
       "Full-stack voice-to-database pipeline supporting Hindi speech input. Switchable STT providers (Whisper, Google, Azure) and LLMs (Claude, OpenAI). Automatic ledger calculation for group expenses.",
     tech: ["FastAPI", "DuckDB", "LangChain", "Claude API", "Next.js", "TypeScript"],
     categories: ["ai"],
-    github: "https://github.com/Jrkesari/splitcash",
     highlight: "Whisper · Hindi NLP · LangChain agents",
   },
   {
@@ -45,7 +105,6 @@ export const projects: Project[] = [
       "Production-ready scraper that identifies site type (static, React/Vue SPA, Cloudflare-protected) and selects the right strategy. Supports MCP protocol for agent integration.",
     tech: ["Python", "Playwright", "BeautifulSoup", "FastAPI", "MCP"],
     categories: ["ai"],
-    github: "https://github.com/Jrkesari/webchat",
     highlight: "MCP integration · Stealth scraping",
   },
   {
@@ -58,38 +117,5 @@ export const projects: Project[] = [
     tech: ["Python", "SurrealDB", "MCP", "Apify", "FastAPI"],
     categories: ["ai"],
     highlight: "Multi-agent tool governance",
-  },
-  {
-    id: "obsi",
-    name: "Vantage (OBSI)",
-    description:
-      "VM observability platform — connect any server in under 2 minutes via SSH and get live dashboards for 20+ system metrics.",
-    longDescription:
-      "Automated 8-step deployment pipeline: SSH credentials → agent install → OTel Collector setup → systemd service → live ClickHouse-backed dashboards. 15-second refresh cadence, hot-reload Prometheus scrape targets, multi-VM support.",
-    tech: ["FastAPI", "Python", "OpenTelemetry", "ClickHouse", "Next.js", "TypeScript"],
-    categories: ["web"],
-    highlight: "Sub-2min onboarding · 20+ OTel metrics",
-  },
-  {
-    id: "aireviewhub",
-    name: "AiReviewHub",
-    description:
-      "Review platform for tools and services built with Spring Boot. Categorized reviews helping developers discover and evaluate options.",
-    longDescription:
-      "Full-stack review platform with categorized entries, ratings, and discovery features.",
-    tech: ["Spring Boot", "Java", "MySQL", "React"],
-    categories: ["web"],
-    github: "https://github.com/Jrkesari/AiReviewHub",
-  },
-  {
-    id: "workwise",
-    name: "WorkWise",
-    description:
-      "Job matching platform connecting seekers with meaningful opportunities focused on decent work and economic growth.",
-    longDescription:
-      "Full-stack job matching platform with smart filtering and matching algorithms promoting equitable employment.",
-    tech: ["React", "Node.js", "MongoDB"],
-    categories: ["web"],
-    github: "https://github.com/Jrkesari/workwise",
   },
 ];

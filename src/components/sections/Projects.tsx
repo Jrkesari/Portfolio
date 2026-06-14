@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
-import { Github, ArrowUpRight, ExternalLink } from "lucide-react";
+import { AnimatePresence, motion } from "framer-motion";
+import { Github, ArrowUpRight, ExternalLink, Plus } from "lucide-react";
 import { projects, type ProjectCategory } from "@/data/projects";
 import { fadeUp, stagger, viewportOnce } from "@/lib/animations";
 
@@ -12,6 +12,7 @@ const filters: { label: string; value: ProjectCategory | "all" }[] = [
 
 export function Projects() {
   const [activeFilter, setActiveFilter] = useState<ProjectCategory | "all">("all");
+  const [openId, setOpenId] = useState<string | null>(null);
 
   const filtered =
     activeFilter === "all"
@@ -19,20 +20,22 @@ export function Projects() {
       : projects.filter((p) => p.categories.includes(activeFilter));
 
   return (
-    <section id="projects" className="py-16 px-6 border-t border-border">
+    <section id="projects" className="py-20 px-6 border-t border-border">
       <div className="max-w-content mx-auto">
         <motion.div
           variants={stagger}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
-          className="space-y-8"
+          className="space-y-10"
         >
-          {/* Header */}
-          <motion.div variants={fadeUp} className="flex items-baseline justify-between">
-            <div>
-              <span className="font-mono text-xs text-muted mr-2">02</span>
-              <h2 className="inline text-base font-semibold text-gray-900">Projects</h2>
+          {/* Bold section header */}
+          <motion.div variants={fadeUp} className="flex items-end justify-between">
+            <div className="flex items-baseline gap-3">
+              <span className="font-mono text-sm text-muted">02</span>
+              <h2 className="text-3xl sm:text-4xl font-semibold tracking-tighter text-[#171717]">
+                Projects
+              </h2>
             </div>
             {/* Filter tabs */}
             <div className="flex items-center gap-1">
@@ -58,69 +61,111 @@ export function Projects() {
             variants={stagger}
             initial="hidden"
             animate="visible"
-            className="space-y-0"
+            className="border-t border-border"
           >
-            {filtered.map((project, i) => (
-              <motion.div
-                key={project.id}
-                variants={fadeUp}
-                className={`py-5 flex items-start justify-between gap-4 group cursor-default ${
-                  i < filtered.length - 1 ? "border-b border-border" : ""
-                }`}
-              >
-                <div className="flex-1 space-y-1.5 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-[15px] font-medium text-gray-900 group-hover:text-accent transition-colors">
-                      {project.name}
-                    </h3>
-                    {project.highlight && (
-                      <span className="text-xs font-mono text-muted px-2 py-0.5 bg-gray-50 rounded border border-border truncate hidden sm:inline">
-                        {project.highlight}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-sm text-muted leading-relaxed">
-                    {project.description}
-                  </p>
-                  <div className="flex flex-wrap gap-1.5 pt-1">
-                    {project.tech.map((t) => (
-                      <span
-                        key={t}
-                        className="font-mono text-xs text-muted bg-gray-50 px-2 py-0.5 rounded border border-border"
-                      >
-                        {t}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+            {filtered.map((project, i) => {
+              const isOpen = openId === project.id;
+              return (
+                <motion.div
+                  key={project.id}
+                  variants={fadeUp}
+                  className="border-b border-border"
+                >
+                  <button
+                    onClick={() => setOpenId(isOpen ? null : project.id)}
+                    className="w-full text-left py-6 flex items-start gap-4 group"
+                  >
+                    {/* Index */}
+                    <span className="font-mono text-xs text-muted pt-1 w-7 flex-shrink-0 tabular-nums">
+                      {String(i + 1).padStart(2, "0")}
+                    </span>
 
-                {/* Links */}
-                <div className="flex items-center gap-3 flex-shrink-0 pt-0.5">
-                  {project.github && (
-                    <a
-                      href={project.github}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-muted hover:text-gray-900 transition-colors"
-                      aria-label="GitHub"
-                    >
-                      <Github size={16} />
-                    </a>
-                  )}
-                  {project.live && (
-                    <a
-                      href={project.live}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-muted hover:text-accent transition-colors"
-                      aria-label="Live demo"
-                    >
-                      <ExternalLink size={16} />
-                    </a>
-                  )}
-                </div>
-              </motion.div>
-            ))}
+                    <div className="flex-1 min-w-0 space-y-2">
+                      <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+                        <h3 className="text-lg font-medium text-[#171717] tracking-tight group-hover:text-accent-dark transition-colors">
+                          {project.name}
+                        </h3>
+                        {project.group && (
+                          <span className="font-mono text-[10px] uppercase tracking-wider text-muted px-1.5 py-0.5 border border-border rounded">
+                            {project.group}
+                          </span>
+                        )}
+                      </div>
+
+                      {project.highlight && (
+                        <p className="font-mono text-xs text-muted">{project.highlight}</p>
+                      )}
+
+                      <p className="text-sm text-gray-600 leading-relaxed max-w-xl">
+                        {project.description}
+                      </p>
+
+                      {/* Expandable detail */}
+                      <AnimatePresence initial={false}>
+                        {isOpen && (
+                          <motion.div
+                            initial={{ height: 0, opacity: 0 }}
+                            animate={{ height: "auto", opacity: 1 }}
+                            exit={{ height: 0, opacity: 0 }}
+                            transition={{ duration: 0.25, ease: "easeOut" }}
+                            className="overflow-hidden"
+                          >
+                            <p className="text-sm text-muted leading-relaxed max-w-xl pt-1 pb-2">
+                              {project.longDescription}
+                            </p>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+
+                      <div className="flex flex-wrap gap-1.5 pt-1">
+                        {project.tech.map((t) => (
+                          <span
+                            key={t}
+                            className="font-mono text-xs text-muted bg-surface px-2 py-0.5 rounded border border-border"
+                          >
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Right rail: links + expand affordance */}
+                    <div className="flex items-center gap-3 flex-shrink-0 pt-1">
+                      {project.github && (
+                        <a
+                          href={project.github}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="text-muted hover:text-[#171717] transition-colors"
+                          aria-label="GitHub"
+                        >
+                          <Github size={16} />
+                        </a>
+                      )}
+                      {project.live && (
+                        <a
+                          href={project.live}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="text-muted hover:text-accent transition-colors"
+                          aria-label="Live demo"
+                        >
+                          <ExternalLink size={16} />
+                        </a>
+                      )}
+                      <Plus
+                        size={16}
+                        className={`text-muted transition-transform duration-200 ${
+                          isOpen ? "rotate-45 text-[#171717]" : ""
+                        }`}
+                      />
+                    </div>
+                  </button>
+                </motion.div>
+              );
+            })}
           </motion.div>
 
           {/* GitHub link */}
@@ -129,7 +174,7 @@ export function Projects() {
               href="https://github.com/Jrkesari"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-gray-900 transition-colors"
+              className="inline-flex items-center gap-1.5 text-sm text-muted hover:text-[#171717] transition-colors"
             >
               <Github size={14} />
               <span>View all on GitHub</span>

@@ -3,6 +3,7 @@ import { Link } from "@tanstack/react-router";
 
 const navLinks = [
   { label: "Home", href: "/" },
+  { label: "Play", href: "#play" },
   { label: "Projects", href: "#projects" },
   { label: "Experience", href: "#experience" },
   { label: "Contact", href: "#contact" },
@@ -24,7 +25,7 @@ export function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 bg-[#FEFEFE]/90 backdrop-blur-sm transition-transform duration-300 ${
+      className={`fixed top-0 left-0 right-0 z-50 bg-bg/80 backdrop-blur-md transition-transform duration-300 ${
         visible ? "translate-y-0" : "-translate-y-full"
       }`}
     >

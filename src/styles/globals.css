@@ -6,13 +6,13 @@
 
 @layer base {
   :root {
-    --bg: #FEFEFE;
+    --bg: #F5F1EA;          /* warm paper */
     --fg: #171717;
     --accent: #171717;
-    --accent-light: #F0EDE6;
-    --border: #EBEBEB;
-    --muted: #737373;
-    --card: #F7F5F0;
+    --accent-light: #EAE3D6;
+    --border: #E2DBCC;       /* warm border to match paper bg */
+    --muted: #6F6A60;        /* warm-tinted muted text */
+    --card: #FBF9F4;         /* lighter cream so cards lift off the paper */
   }
 
   * {

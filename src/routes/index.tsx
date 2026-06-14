@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { Hero } from "@/components/sections/Hero";
+import { PromptGolf } from "@/components/sections/PromptGolf";
 import { GitHubStats } from "@/components/sections/GitHubStats";
 import { Projects } from "@/components/sections/Projects";
 import { Experience } from "@/components/sections/Experience";
@@ -14,6 +15,7 @@ function Home() {
   return (
     <main>
       <Hero />
+      <PromptGolf />
       <GitHubStats />
       <Projects />
       <Experience />

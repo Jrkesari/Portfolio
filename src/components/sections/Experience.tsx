@@ -4,19 +4,21 @@ import { fadeUp, stagger, viewportOnce } from "@/lib/animations";
 
 export function Experience() {
   return (
-    <section id="experience" className="py-16 px-6 border-t border-border">
+    <section id="experience" className="py-20 px-6 border-t border-border">
       <div className="max-w-content mx-auto">
         <motion.div
           variants={stagger}
           initial="hidden"
           whileInView="visible"
           viewport={viewportOnce}
-          className="space-y-8"
+          className="space-y-10"
         >
           {/* Header */}
-          <motion.div variants={fadeUp}>
-            <span className="font-mono text-xs text-muted mr-2">03</span>
-            <h2 className="inline text-base font-semibold text-gray-900">Experience</h2>
+          <motion.div variants={fadeUp} className="flex items-baseline gap-3">
+            <span className="font-mono text-sm text-muted">03</span>
+            <h2 className="text-3xl sm:text-4xl font-semibold tracking-tighter text-[#171717]">
+              Experience
+            </h2>
           </motion.div>
 
           {/* Timeline */}
@@ -56,7 +58,7 @@ export function Experience() {
                   {exp.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="font-mono text-xs text-muted bg-gray-50 px-2 py-0.5 rounded border border-border"
+                      className="font-mono text-xs text-muted bg-surface px-2 py-0.5 rounded border border-border"
                     >
                       {skill}
                     </span>

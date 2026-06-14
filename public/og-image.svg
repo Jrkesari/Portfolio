@@ -1,0 +1,47 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1200" height="630" fill="#F5F1EA"/>
+
+  <!-- subtle border frame -->
+  <rect x="24" y="24" width="1152" height="582" rx="20" fill="none" stroke="#E2DBCC" stroke-width="2"/>
+
+  <!-- status line -->
+  <circle cx="88" cy="120" r="7" fill="#27c93f"/>
+  <text x="106" y="127" font-family="'DM Mono', monospace" font-size="22" letter-spacing="4" fill="#6F6A60">AI ENGINEER · NETISION</text>
+
+  <!-- name -->
+  <text x="84" y="270" font-family="'DM Sans', sans-serif" font-weight="600" font-size="150" letter-spacing="-6" fill="#171717">Jayesh</text>
+  <text x="84" y="400" font-family="'DM Sans', sans-serif" font-weight="600" font-size="150" letter-spacing="-6" fill="#A89E8C">Kesari</text>
+
+  <!-- mono tagline -->
+  <text x="88" y="478" font-family="'DM Mono', monospace" font-size="30" fill="#171717"><tspan fill="#6F6A60">&gt; </tspan>building agents · automation · LLM pipelines</text>
+
+  <!-- tech chips -->
+  <g font-family="'DM Mono', monospace" font-size="22" fill="#6F6A60">
+    <rect x="88" y="520" width="140" height="44" rx="8" fill="#EDE7DA" stroke="#E2DBCC"/>
+    <text x="108" y="549">LangGraph</text>
+    <rect x="244" y="520" width="86" height="44" rx="8" fill="#EDE7DA" stroke="#E2DBCC"/>
+    <text x="264" y="549">MCP</text>
+    <rect x="346" y="520" width="120" height="44" rx="8" fill="#EDE7DA" stroke="#E2DBCC"/>
+    <text x="366" y="549">FastAPI</text>
+    <rect x="482" y="520" width="110" height="44" rx="8" fill="#EDE7DA" stroke="#E2DBCC"/>
+    <text x="502" y="549">Python</text>
+  </g>
+
+  <!-- bot mascot, right side -->
+  <g transform="translate(905, 210) scale(1.7)">
+    <line x1="95" y1="34" x2="95" y2="18" stroke="#171717" stroke-width="3" stroke-linecap="round"/>
+    <circle cx="95" cy="13" r="6" fill="#27c93f"/>
+    <rect x="42" y="34" width="106" height="86" rx="26" fill="#FBF9F4" stroke="#171717" stroke-width="3.5"/>
+    <rect x="32" y="62" width="10" height="30" rx="5" fill="#171717"/>
+    <rect x="148" y="62" width="10" height="30" rx="5" fill="#171717"/>
+    <rect x="58" y="50" width="74" height="54" rx="16" fill="#171717"/>
+    <circle cx="80" cy="77" r="8" fill="#F5F1EA"/>
+    <circle cx="110" cy="77" r="8" fill="#F5F1EA"/>
+    <circle cx="82" cy="78" r="3" fill="#171717"/>
+    <circle cx="112" cy="78" r="3" fill="#171717"/>
+    <rect x="56" y="124" width="78" height="46" rx="16" fill="#FBF9F4" stroke="#171717" stroke-width="3.5"/>
+    <circle cx="95" cy="147" r="7" fill="#171717"/>
+    <line x1="56" y1="138" x2="38" y2="150" stroke="#171717" stroke-width="3.5" stroke-linecap="round"/>
+    <line x1="134" y1="138" x2="152" y2="150" stroke="#171717" stroke-width="3.5" stroke-linecap="round"/>
+  </g>
+</svg>

@@ -1,5 +1,9 @@
 {
+  "framework": "vite",
   "outputDirectory": "dist",
   "buildCommand": "npm run build",
-  "rewrites": [{ "source": "/(.*)", "destination": "/index.html" }]
+  "devCommand": "vite --port $PORT",
+  "rewrites": [
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
+  ]
 }
