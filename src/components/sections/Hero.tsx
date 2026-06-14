@@ -26,7 +26,7 @@ export function Hero() {
             className="flex items-center gap-2 font-mono text-xs text-muted"
           >
             <span className="inline-block w-1.5 h-1.5 rounded-full bg-green-500" />
-            <span className="uppercase tracking-[0.18em]">AI Engineer · Netision</span>
+            <span className="uppercase tracking-[0.18em]">AI Engineer</span>
           </motion.div>
 
           {/* Oversized display headline */}
