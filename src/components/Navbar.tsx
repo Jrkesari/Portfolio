@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { Logo } from "./Logo";
 
 const navLinks = [
   { label: "Home", href: "/" },
@@ -30,8 +31,8 @@ export function Navbar() {
       }`}
     >
       <div className="max-w-content mx-auto px-6 py-4 flex items-center justify-between">
-        <Link to="/" className="font-mono text-sm font-medium text-gray-900 hover:text-accent transition-colors">
-          jrk
+        <Link to="/" aria-label="Home" className="text-gray-900 hover:opacity-60 transition-opacity">
+          <Logo className="h-[18px] w-auto" />
         </Link>
         <nav className="flex items-center gap-6">
           {navLinks.map((link) =>
