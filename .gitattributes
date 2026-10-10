@@ -1,2 +1,6 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Normalise text to LF everywhere, so Biome and fresh clones agree on Windows too.
+* text=auto eol=lf
+*.woff2 binary
+*.png binary
+*.pdf binary
+*.ico binary

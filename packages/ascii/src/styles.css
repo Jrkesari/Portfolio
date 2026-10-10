@@ -1,0 +1,130 @@
+/* @jrk/ascii — styles for <AsciiDiagram>. Colours come from the host page:
+   --ink, --graphite, --faint, --neel (components), --kesari (what moves), --kesari-ink,
+   --ascii-bg, --font-mono, --font-hand, --ease-lazy. */
+
+.ascii {
+  margin: 0;
+}
+.ascii-fit {
+  /* Size containment gives the figure an intrinsic width of 0, so it can shrink
+     anywhere. The flip side: never put it in an auto or content-sized track; give
+     it a real column (minmax(0, 1fr)) and it fills that. */
+  container-type: inline-size;
+  width: 100%;
+}
+.ascii-stage {
+  position: relative;
+  width: max-content;
+  max-width: 100%;
+  font-family: var(--font-mono);
+  font-weight: 400;
+  font-size: min(var(--max-fs, 14px), calc(100cqi / (var(--cols) * 0.62)));
+  line-height: 1.2;
+  color: var(--graphite);
+  font-variant-ligatures: none;
+}
+.ascii-pre {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font: inherit;
+  white-space: pre;
+  transition: color 0.8s var(--ease-lazy);
+}
+.ascii-row {
+  display: block;
+  height: 1.2em;
+}
+/* Off-path parts dim, but stay readable (≥3:1 on the page). */
+.ascii-stage.has-focus .ascii-pre {
+  color: color-mix(in oklab, var(--graphite) 75%, var(--ascii-bg, var(--paper, #fff)));
+}
+.ascii-n {
+  color: var(--neel, var(--ink));
+  transition: color 0.8s var(--ease-lazy);
+}
+.ascii-e {
+  color: color-mix(in oklab, var(--kesari-ink, var(--kesari)) 62%, var(--graphite));
+}
+.ascii-tint {
+  position: absolute;
+  z-index: 0;
+  border-radius: 3px;
+  background: color-mix(in oklab, var(--neel, var(--kesari)) 10%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--neel, var(--kesari)) 14%, transparent);
+  animation: tint-in 0.9s var(--ease-lazy) both;
+}
+.ascii-tint.is-hover {
+  background: color-mix(in oklab, var(--ink) 6%, transparent);
+}
+@keyframes tint-in {
+  from {
+    opacity: 0;
+  }
+}
+.ascii-packets {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+}
+.ascii-packet,
+.ascii-trail {
+  position: absolute;
+  left: 0;
+  top: 0;
+  white-space: pre;
+  line-height: 1.2;
+  height: 1.2em;
+}
+.ascii-packet {
+  color: var(--kesari);
+  background: var(--ascii-bg);
+}
+.ascii-trail {
+  color: var(--kesari);
+  font-weight: 600;
+  background: var(--ascii-bg);
+}
+.ascii-note {
+  position: absolute;
+  z-index: 3;
+  font-family: var(--font-hand);
+  color: var(--kesari-ink);
+  white-space: pre;
+  line-height: 1.2;
+  opacity: 0;
+  transform: translateY(3px);
+  transition: opacity 1s var(--ease-lazy), transform 1s var(--ease-lazy);
+}
+.ascii-note.is-shown {
+  opacity: 1;
+  transform: none;
+}
+.ascii-stage.is-waiting > .ascii-pre,
+.ascii-stage.is-waiting > .ascii-tint {
+  clip-path: inset(0 0 100% 0);
+}
+.ascii-stage.is-printing > .ascii-pre {
+  animation: ascii-print calc(var(--rows) * 42ms) steps(var(--rows), end) both;
+}
+@keyframes ascii-print {
+  from {
+    clip-path: inset(0 0 100% 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* On paper, every figure is simply there: no print-in, no packets. */
+@media print {
+  .ascii-stage > .ascii-pre,
+  .ascii-stage > .ascii-tint {
+    clip-path: none !important;
+    animation: none !important;
+  }
+  .ascii-packets {
+    display: none;
+  }
+}

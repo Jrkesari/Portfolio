@@ -1,0 +1,12 @@
+{
+  "extends": "@jrk/tsconfig/react.json",
+  "compilerOptions": {
+    "types": ["vite/client", "node"],
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  },
+  "include": ["src", "scripts", "vite.config.ts"]
+}

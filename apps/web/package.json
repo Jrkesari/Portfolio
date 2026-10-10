@@ -1,0 +1,36 @@
+{
+  "name": "@jrk/web",
+  "version": "3.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "typecheck": "tsc --noEmit",
+    "generate": "tsx scripts/generate.ts",
+    "contributions": "tsx scripts/contributions.ts"
+  },
+  "dependencies": {
+    "@jrk/ascii": "workspace:*",
+    "@jrk/content": "workspace:*",
+    "@tanstack/react-router": "^1.170.41",
+    "cmdk": "^1.1.1",
+    "lenis": "^1.3.26",
+    "react": "catalog:",
+    "react-dom": "catalog:"
+  },
+  "devDependencies": {
+    "@jrk/tsconfig": "workspace:*",
+    "@tailwindcss/vite": "^4.3.3",
+    "@tanstack/router-plugin": "^1.168.42",
+    "@types/node": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "^4.7.0",
+    "tailwindcss": "^4.3.3",
+    "tsx": "^4.23.15",
+    "typescript": "catalog:",
+    "vite": "^6.4.3"
+  }
+}

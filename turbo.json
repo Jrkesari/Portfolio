@@ -1,0 +1,30 @@
+{
+  "$schema": "https://turborepo.dev/schema.json",
+  "ui": "stream",
+  "tasks": {
+    "generate": {
+      "dependsOn": ["^typecheck"],
+      "inputs": ["scripts/generate.ts", "$TURBO_ROOT$/packages/content/src/**"],
+      "outputs": ["public/llms.txt", "public/resume.json", "public/resume.md", "public/sitemap.xml"]
+    },
+    "build": {
+      "dependsOn": ["^build", "generate"],
+      "outputs": ["dist/**"]
+    },
+    "contributions": {
+      "dependsOn": ["build"],
+      "cache": false
+    },
+    "typecheck": {
+      "dependsOn": ["^typecheck"]
+    },
+    "test": {
+      "dependsOn": ["^typecheck"]
+    },
+    "dev": {
+      "dependsOn": ["generate"],
+      "cache": false,
+      "persistent": true
+    }
+  }
+}

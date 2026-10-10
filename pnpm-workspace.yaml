@@ -1,0 +1,22 @@
+packages:
+  - "apps/*"
+  - "packages/*"
+
+# Don't install anything published less than a day ago — a cheap guard
+# against a compromised release that hasn't been noticed yet.
+minimumReleaseAge: 1440
+
+# One version of the things every package touches.
+catalog:
+  react: ^19.2.4
+  react-dom: ^19.2.4
+  "@types/react": ^19.2.14
+  "@types/react-dom": ^19.2.3
+  "@types/node": ^22.19.0
+  typescript: ~5.9.3
+
+onlyBuiltDependencies:
+  - esbuild
+
+# Vercel installs isolated; so do we, so a phantom dependency fails here first.
+nodeLinker: isolated

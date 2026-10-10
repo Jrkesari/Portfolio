@@ -1,0 +1,945 @@
+@import "tailwindcss";
+@import "lenis/dist/lenis.css";
+@import "@jrk/ascii/styles.css";
+
+/* Workspace packages ship TSX with class names; let Tailwind see them. */
+@source "../../../../packages/ascii/src";
+
+/* ------------------------------------------------------------------ fonts */
+/* Self-hosted subsets (see /public/fonts/OFL.txt). The mono subsets keep the
+   box-drawing, arrows and block glyphs the diagrams depend on — the Google
+   Fonts subsets drop them, which breaks alignment. */
+/* Newsreader in two cuts: text (optical size 18, weights 400 to 500) and display
+   (weight 300, optical sizes 32 to 72), which only headings use. A third of the
+   bytes of one file holding every size. */
+@font-face {
+  font-family: "Newsreader";
+  src: url("/fonts/newsreader.woff2") format("woff2");
+  font-weight: 400 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Newsreader";
+  src: url("/fonts/newsreader-display.woff2") format("woff2");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Newsreader";
+  src: url("/fonts/newsreader-italic.woff2") format("woff2");
+  font-weight: 400 500;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JRK Mono";
+  src: url("/fonts/jrk-mono.woff2") format("woff2");
+  font-weight: 300 700;
+  font-display: swap;
+}
+@font-face {
+  font-family: "JRK Hand";
+  src: url("/fonts/jrk-hand.woff2") format("woff2");
+  font-weight: 400;
+  font-display: swap;
+}
+
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+/* ------------------------------------------------------------------ tokens */
+@theme inline {
+  --font-serif: "Newsreader", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  --font-mono: "JRK Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+  --font-hand: "JRK Hand", "JRK Mono", ui-monospace, monospace;
+
+  --color-paper: var(--paper);
+  --color-paper-2: var(--paper-2);
+  --color-card: var(--card);
+  --color-ink: var(--ink);
+  --color-ink-2: var(--ink-2);
+  --color-graphite: var(--graphite);
+  --color-faint: var(--faint);
+  --color-rule: var(--rule);
+  --color-kesari: var(--kesari);
+  --color-kesari-ink: var(--kesari-ink);
+  --color-neel: var(--neel);
+
+  --ease-lazy: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-drift: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+:root {
+  /* Khadi paper, neel ink, and one accent: kesari — saffron — after my surname.
+     Indigo for the things in a system, saffron for what moves through it. Neel does
+     the structural work (links, numbers, labels, handwriting); kesari is kept for
+     packets, the live state and the odd mark, so the page doesn't read as the
+     cream-and-rust look that every generated site has in 2026. */
+  --paper: #f1ead8;
+  --paper-2: #e9e1cc;
+  --card: #f6f1e3;
+  --ink: #1c2033;
+  --ink-2: #2e3248;
+  --graphite: #5c5e6e;
+  --faint: #a7a290;
+  --rule: #dad1ba;
+  --kesari: #d9661a;
+  --kesari-ink: #a4470c;
+  --neel: #3a4a8c;
+  --mark: color-mix(in oklab, var(--kesari) 24%, transparent);
+  --ascii-bg: var(--paper);
+
+  --measure: 40rem;
+  --wide: 70rem;
+  --gutter: clamp(1rem, 4vw, 2.5rem);
+
+  color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+  --paper: #11131c;
+  --paper-2: #171a26;
+  --card: #1a1d2a;
+  --ink: #ece6d6;
+  --ink-2: #cfc9b9;
+  --graphite: #9a9ba8;
+  --faint: #545769;
+  --rule: #272a3a;
+  --kesari: #f29a4a;
+  --kesari-ink: #f6ae6e;
+  --neel: #9baef0;
+  --mark: color-mix(in oklab, var(--kesari) 26%, transparent);
+  color-scheme: dark;
+}
+
+/* ------------------------------------------------------------------ base */
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    background: var(--paper);
+  }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink-2);
+    font-family: var(--font-serif);
+    font-size: 1.0625rem;
+    line-height: 1.62;
+    font-feature-settings: "kern", "liga";
+  }
+
+  @media (min-width: 768px) {
+    body {
+      font-size: 1.125rem;
+    }
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--ink);
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  ::selection {
+    background: var(--mark);
+    color: var(--ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--kesari-ink);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+
+  /* Where focus is moved for the reader after a navigation — no ring needed. */
+  [tabindex="-1"]:focus {
+    outline: none;
+  }
+
+  /* Anything scrolled into view by focus or a #hash clears the fixed header. */
+  html {
+    scroll-padding-top: 5rem;
+  }
+
+  hr {
+    border: 0;
+    border-top: 1px solid var(--rule);
+  }
+
+  /* Paper grain. Static, tiny, and off for people who ask for less. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+    opacity: 0.32;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.32 0 0 0 0 0.3 0 0 0 0 0.36 0 0 0 0.09 0'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  :root[data-theme="dark"] body::before {
+    opacity: 0.18;
+  }
+
+  @media (prefers-reduced-transparency: reduce) {
+    body::before {
+      display: none;
+    }
+  }
+}
+
+/* ------------------------------------------------------------------ utilities */
+/* Lowercase, untracked: a label is a note on the page, not a headline. */
+@utility label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  color: var(--graphite);
+}
+
+@utility mono {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0;
+}
+
+/* Margin notes in indigo, like fountain-pen ink. */
+@utility hand {
+  font-family: var(--font-hand);
+  color: var(--neel);
+}
+
+@utility measure {
+  max-width: var(--measure);
+}
+
+@utility shell {
+  width: 100%;
+  max-width: calc(var(--wide) + var(--gutter) * 2);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+@utility link {
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--neel) 55%, transparent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.22em;
+  transition: text-decoration-thickness 0.3s var(--ease-lazy), color 0.3s;
+  &:hover {
+    text-decoration-thickness: 2px;
+    color: var(--neel);
+  }
+}
+
+/* A highlighter stroke that sweeps in when its parent says so. */
+@utility mark {
+  background-image: linear-gradient(var(--mark), var(--mark));
+  background-repeat: no-repeat;
+  background-position: 0 88%;
+  background-size: 0% 0.42em;
+  transition: background-size 1.6s var(--ease-lazy);
+  padding-inline: 0.04em;
+  [data-seen="true"] & ,
+  &[data-seen="true"] {
+    background-size: 100% 0.42em;
+  }
+}
+
+/* ------------------------------------------------------------------ reveal on scroll */
+/* Pure CSS scroll-driven reveals where supported; everything is simply visible elsewhere. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 55%;
+    }
+    .reveal-slow {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 35%;
+    }
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(22px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ------------------------------------------------------------------ view transitions */
+@media (prefers-reduced-motion: no-preference) {
+  ::view-transition-old(root) {
+    animation: vt-out 0.45s var(--ease-lazy) both;
+  }
+  ::view-transition-new(root) {
+    animation: vt-in 0.7s var(--ease-lazy) both;
+  }
+  /* A title carried from a list into its page's heading: one slow glide. */
+  ::view-transition-group(*) {
+    animation-duration: 0.6s;
+    animation-timing-function: var(--ease-lazy);
+  }
+}
+/* Previous and next between case studies slide the way you're going. */
+@media (prefers-reduced-motion: no-preference) {
+  html:active-view-transition-type(forward)::view-transition-old(root) {
+    animation: vt-leave-left 0.45s var(--ease-lazy) both;
+  }
+  html:active-view-transition-type(forward)::view-transition-new(root) {
+    animation: vt-enter-right 0.65s var(--ease-lazy) both;
+  }
+  html:active-view-transition-type(back)::view-transition-old(root) {
+    animation: vt-leave-right 0.45s var(--ease-lazy) both;
+  }
+  html:active-view-transition-type(back)::view-transition-new(root) {
+    animation: vt-enter-left 0.65s var(--ease-lazy) both;
+  }
+}
+@keyframes vt-leave-left {
+  to {
+    opacity: 0;
+    transform: translateX(-48px);
+  }
+}
+@keyframes vt-enter-right {
+  from {
+    opacity: 0;
+    transform: translateX(48px);
+  }
+}
+@keyframes vt-leave-right {
+  to {
+    opacity: 0;
+    transform: translateX(48px);
+  }
+}
+@keyframes vt-enter-left {
+  from {
+    opacity: 0;
+    transform: translateX(-48px);
+  }
+}
+
+/* A reached step's bar fills in, so its length reads as time. */
+@media (prefers-reduced-motion: no-preference) {
+  .bar-fill {
+    animation: bar-fill 0.5s var(--ease-lazy) both;
+  }
+}
+@keyframes bar-fill {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+
+/* An underline that draws itself under a title while its row is hovered or focused.
+   Inline, so a title that wraps is underlined line after line. */
+.title-draw {
+  background-image: linear-gradient(var(--neel), var(--neel));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 1px;
+  transition: background-size 0.35s var(--ease-lazy);
+}
+.group:hover .title-draw,
+.group:focus-visible .title-draw {
+  background-size: 100% 1px;
+}
+@media (prefers-reduced-motion: reduce) {
+  .title-draw {
+    transition: none;
+  }
+}
+@keyframes vt-out {
+  to {
+    opacity: 0;
+    filter: blur(4px);
+  }
+}
+@keyframes vt-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+    filter: blur(4px);
+  }
+}
+
+/* ------------------------------------------------------------------ print */
+@media print {
+  html {
+    font-size: 10.1px;
+  }
+  html,
+  body {
+    background: #fff !important;
+    color: #000;
+  }
+  body::before {
+    display: none;
+  }
+  /* On paper everything is simply there: no scroll-driven reveals mid-fade. */
+  .reveal,
+  .reveal-slow,
+  .rule-draw {
+    animation: none !important;
+  }
+  .growth-bar {
+    clip-path: none !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}
+
+/* ------------------------------------------------------------------ small motions */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(18px) rotate(-0.6deg) scale(0.985);
+  }
+}
+@keyframes drift {
+  from {
+    transform: translate(-6px, -4px);
+  }
+  to {
+    transform: translate(6px, 5px);
+  }
+}
+@keyframes breathe {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.82);
+  }
+}
+@keyframes stamp-in {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 6px) rotate(-8deg) scale(1.4);
+  }
+  35% {
+    opacity: 1;
+    transform: translate(-50%, 0) rotate(-6deg) scale(1);
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -4px) rotate(-6deg) scale(1);
+  }
+}
+
+/* ------------------------------------------------------------------ index card (tl;dr) */
+.index-card {
+  background-color: var(--card);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 31px,
+    color-mix(in oklab, var(--kesari) 14%, transparent) 31px,
+    color-mix(in oklab, var(--kesari) 14%, transparent) 32px
+  );
+  background-position: 0 86px;
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  box-shadow:
+    0 1px 0 color-mix(in oklab, var(--ink) 4%, transparent),
+    0 24px 60px -24px color-mix(in oklab, var(--ink) 35%, transparent);
+}
+
+.stamp {
+  font-family: var(--font-hand);
+  font-size: 12px;
+  color: var(--kesari-ink);
+  border: 1.5px solid currentColor;
+  border-radius: 3px;
+  padding: 0 6px;
+  white-space: nowrap;
+  pointer-events: none;
+  animation: stamp-in 2.2s var(--ease-lazy) both;
+}
+
+/* ------------------------------------------------------------------ command palette */
+.cmdk-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 85;
+  background: color-mix(in oklab, var(--ink) 22%, transparent);
+  backdrop-filter: blur(2px);
+}
+.cmdk-content {
+  position: fixed;
+  z-index: 86;
+  top: 14vh;
+  left: 50%;
+  width: min(620px, calc(100vw - 2rem));
+  transform: translateX(-50%);
+  background: var(--card);
+  border: 1px solid var(--rule);
+  border-radius: 8px;
+  box-shadow: 0 30px 80px -30px color-mix(in oklab, var(--ink) 45%, transparent);
+  overflow: hidden;
+  /* Opened from the keyboard, so it appears at once: no entrance. */
+}
+.cmdk-input {
+  flex: 1;
+  height: 52px;
+  background: transparent;
+  border: 0;
+  outline: none;
+  font-family: var(--font-serif);
+  font-size: 17px;
+  color: var(--ink);
+}
+.cmdk-input::placeholder {
+  color: var(--graphite);
+}
+.cmdk-list {
+  max-height: min(56vh, 440px);
+  overflow: auto;
+  overscroll-behavior: contain;
+  padding: 6px;
+  scroll-padding: 8px;
+}
+.cmdk-list [cmdk-group-heading] {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--graphite);
+  padding: 10px 10px 6px;
+}
+.cmdk-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 10px;
+  border-radius: 5px;
+  font-size: 15.5px;
+  color: var(--ink-2);
+  cursor: pointer;
+  user-select: none;
+}
+.cmdk-item[data-selected="true"] {
+  background: color-mix(in oklab, var(--kesari) 12%, transparent);
+  color: var(--ink);
+}
+@keyframes nudge {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+/* A hairline that draws itself as its section scrolls in. */
+.rule-draw {
+  transform-origin: left center;
+}
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .rule-draw {
+      animation: rule-draw linear both;
+      animation-timeline: view();
+      animation-range: entry 20% cover 30%;
+    }
+  }
+}
+@keyframes rule-draw {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* ------------------------------------------------------------------ provenance tags */
+.tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  padding: 0 6px;
+  border: 1px solid var(--rule);
+  border-radius: 3px;
+  color: var(--graphite);
+}
+
+/* ------------------------------------------------------------------ receipt */
+/* Straight, not tilted: the point of this receipt is that every line is sourced. */
+.receipt-wrap {
+  justify-self: center;
+  width: min(100%, 27rem);
+}
+.receipt {
+  --z: 7px;
+  position: relative;
+  padding: 28px clamp(14px, 4vw, 24px) 40px;
+  background: color-mix(in oklab, var(--card) 70%, white 30%);
+  color: var(--ink-2);
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.95;
+  box-shadow: 0 30px 60px -30px color-mix(in oklab, var(--ink) 40%, transparent);
+  -webkit-mask:
+    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(2 * var(--z)) 100%;
+  mask:
+    conic-gradient(from -45deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) 50% / calc(2 * var(--z)) 100%;
+}
+:root[data-theme="dark"] .receipt {
+  background: color-mix(in oklab, var(--card) 85%, white 6%);
+}
+.receipt-line {
+  display: grid;
+  grid-template-columns: minmax(0, max-content) minmax(0.6rem, 1fr) auto 4.4rem;
+  align-items: baseline;
+  gap: 8px;
+}
+.receipt-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.receipt-dots {
+  border-bottom: 1px dotted var(--faint);
+  transform: translateY(-4px);
+}
+.receipt-src {
+  justify-self: end;
+  font-size: 9px;
+  line-height: 1.6;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--graphite);
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  padding: 0 4px;
+  cursor: help;
+}
+.receipt-rule {
+  margin: 10px 0;
+  border-top: 1px dashed var(--faint);
+}
+@media (prefers-reduced-motion: no-preference) {
+  .receipt {
+    clip-path: inset(0 0 100% 0);
+  }
+  .receipt.is-printing {
+    animation: receipt-print calc(var(--rows) * 120ms) steps(var(--rows), end) forwards;
+  }
+}
+@keyframes receipt-print {
+  from {
+    clip-path: inset(0 0 100% 0);
+    transform: translateY(-14px);
+  }
+  to {
+    clip-path: inset(0 0 0 0);
+    transform: translateY(0);
+  }
+}
+
+/* ------------------------------------------------------------------ git log rows */
+@media (prefers-reduced-motion: no-preference) {
+  .path-row {
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 0.9s var(--ease-lazy),
+      transform 0.9s var(--ease-lazy);
+    transition-delay: calc(var(--i) * 90ms);
+  }
+  .path-row[data-seen="true"] {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Keep `tree` stems continuous when rows are spaced out for reading. */
+.tree-stem {
+  position: relative;
+}
+.tree-stem::before {
+  content: "";
+  position: absolute;
+  left: 0.31em;
+  top: 0;
+  bottom: 0;
+  border-left: 1px solid var(--faint);
+}
+.tree-stem.is-last::before {
+  bottom: 50%;
+}
+
+/* ------------------------------------------------------------------ reading progress */
+.reading-progress {
+  display: none;
+}
+@supports (animation-timeline: scroll()) {
+  .reading-progress {
+    display: block;
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 60;
+    height: 2px;
+    background: var(--kesari);
+    transform-origin: left center;
+    transform: scaleX(0);
+    animation: reading linear both;
+    animation-timeline: scroll(root block);
+  }
+}
+@keyframes reading {
+  to {
+    transform: scaleX(1);
+  }
+}
+
+/* ------------------------------------------------------------------ long-form notes */
+.note-body {
+  font-size: 1.12rem;
+  line-height: 1.72;
+  color: var(--ink-2);
+}
+.note-body > * + * {
+  margin-top: 1.35em;
+}
+.note-body h2 {
+  margin-top: 2.4em;
+  font-size: 1.6rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+}
+.note-body ul {
+  padding-left: 0;
+  list-style: none;
+}
+.note-body li {
+  position: relative;
+  padding-left: 1.4em;
+}
+.note-body li + li {
+  margin-top: 0.6em;
+}
+.note-body li::before {
+  content: "→";
+  position: absolute;
+  left: 0;
+  top: 0.1em;
+  font-family: var(--font-mono);
+  font-size: 0.8em;
+  color: var(--kesari);
+}
+.note-body blockquote {
+  margin-inline: 0;
+  padding: 0.2em 0 0.2em 1.2em;
+  border-left: 2px solid var(--kesari);
+  font-size: 1.45rem;
+  line-height: 1.4;
+  font-style: italic;
+  color: var(--ink);
+}
+.note-fig {
+  margin-block: 2.2em;
+  margin-inline: 0;
+  padding: 1.6rem;
+  border: 1px solid var(--rule);
+  border-radius: 6px;
+  background: var(--card);
+}
+@media (min-width: 900px) {
+  .note-fig {
+    margin-inline: -3rem;
+  }
+}
+
+/* ------------------------------------------------------------------ résumé */
+.resume-h {
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--rule);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--kesari-ink);
+}
+@media print {
+  @page {
+    size: A4;
+    margin: 9mm 11mm;
+  }
+  header.fixed,
+  footer,
+  .reading-progress {
+    display: none !important;
+  }
+  .resume {
+    padding: 0 !important;
+  }
+  .resume-sheet {
+    border: 0 !important;
+    background: #fff !important;
+    padding: 0 !important;
+    max-width: none !important;
+    font-size: 9.4pt;
+    line-height: 1.36;
+  }
+  .resume-sheet h1 {
+    font-size: 21pt !important;
+  }
+  .resume-sheet section {
+    margin-top: 0.7rem !important;
+  }
+  .resume-sheet .mono {
+    font-size: 6.9pt !important;
+  }
+  .resume-sheet .space-y-6 > :not(:last-child) {
+    margin-bottom: 0.7rem !important;
+  }
+  .resume-sheet li {
+    break-inside: avoid;
+  }
+  .resume-sheet,
+  .resume-sheet * {
+    color: #111 !important;
+  }
+  .resume-sheet .resume-h {
+    color: #a4470c !important;
+  }
+}
+
+/* ------------------------------------------------------------------ hand-drawn underline */
+.scribble-path {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  transition: stroke-dashoffset 1.8s var(--ease-drift);
+}
+.scribble-path[data-seen="true"] {
+  stroke-dashoffset: 0;
+}
+@media (prefers-reduced-motion: reduce) {
+  .scribble-path {
+    stroke-dashoffset: 0;
+    transition: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .receipt {
+    font-size: 10.5px;
+  }
+  .receipt-line {
+    grid-template-columns: minmax(0, max-content) minmax(0.5rem, 1fr) auto 3.6rem;
+    gap: 6px;
+  }
+}
+
+/* Pressable controls give way a little — fast, never slow. */
+@utility press {
+  transition: transform 120ms ease-out;
+  &:active {
+    transform: scale(0.97);
+  }
+}
+
+/* ------------------------------------------------------------------ entrances (CSS only) */
+@media (prefers-reduced-motion: no-preference) {
+  .rise {
+    animation: rise 1s var(--ease-lazy) backwards;
+  }
+  .fade-late {
+    animation: fade-in 1.2s ease-out both;
+  }
+  .fade-swap {
+    animation: fade-swap 0.7s var(--ease-lazy) both;
+  }
+}
+/* Starts at 0.01, not 0: text that's never painted visible is never the LCP element,
+   and the browser would pick a diagram row seconds later instead. */
+@keyframes rise {
+  from {
+    opacity: 0.01;
+    transform: translateY(10px);
+    filter: blur(8px);
+  }
+}
+@keyframes fade-swap {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+    filter: blur(3px);
+  }
+}
+
+/* Height-animating disclosure without measuring: 0fr → 1fr. */
+.disclosure {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s var(--ease-lazy);
+}
+.disclosure[data-open="true"] {
+  grid-template-rows: 1fr;
+}
+.disclosure > * {
+  min-height: 0;
+  overflow: hidden;
+}
+@media (prefers-reduced-motion: reduce) {
+  .disclosure {
+    transition: none;
+  }
+}

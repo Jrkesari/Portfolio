@@ -37,11 +37,16 @@ const GLOBAL_PER_MIN = 120;
 function extraAllowedHosts(): string[] {
   // Explicit allowlist additions (custom domains) via env, comma-separated.
   const extra = process.env.ALLOWED_ORIGINS;
-  return extra ? extra.split(",").map((s: string) => s.trim()).filter(Boolean) : [];
+  return extra
+    ? extra
+        .split(",")
+        .map((s: string) => s.trim())
+        .filter(Boolean)
+    : [];
 }
 
 function originAllowed(req: any): boolean {
-  const src = req.headers["origin"] || req.headers["referer"] || "";
+  const src = req.headers.origin || req.headers.referer || "";
   if (!src) return false; // a same-origin browser fetch always sends one of these
   let host: string;
   try {
@@ -51,9 +56,11 @@ function originAllowed(req: any): boolean {
   }
   // Local dev.
   if (host === "localhost" || host === "127.0.0.1") return true;
-  // Any Vercel deploy of this project (production, preview, branch URLs all
-  // live under *.vercel.app).
-  if (host === "vercel.app" || host.endsWith(".vercel.app")) return true;
+  // The site's own domain, and www.
+  if (host === "jayesh.cv" || host.endsWith(".jayesh.cv")) return true;
+  // The old production URL. Not every *.vercel.app: those are anyone's projects.
+  // Previews can be let in with ALLOWED_ORIGINS if needed.
+  if (host === "portfoliojayesh.vercel.app") return true;
   // Explicit custom domains.
   return extraAllowedHosts().some((h) => host === h || host.endsWith(`.${h}`));
 }
@@ -66,13 +73,20 @@ const SYSTEM_PROMPT =
 type Matcher = (out: string) => boolean;
 
 const norm = (s: string) =>
-  s.trim().toLowerCase().replace(/^["'`]+|["'`]+$/g, "").replace(/\s+/g, " ");
+  s
+    .trim()
+    .toLowerCase()
+    .replace(/^["'`]+|["'`]+$/g, "")
+    .replace(/\s+/g, " ");
 
 const ROUND_MATCHERS: Record<string, Matcher> = {
   "exact-phrase": (out) => norm(out) === "the eagle has landed",
   "single-emoji": (out) => out.trim() === "🍍",
   "haiku-rain": (out) => {
-    const lines = out.trim().split("\n").filter((l) => l.trim().length > 0);
+    const lines = out
+      .trim()
+      .split("\n")
+      .filter((l) => l.trim().length > 0);
     return lines.length === 3;
   },
 };
@@ -96,12 +110,12 @@ function checkLimits(ip: string, now: number): string | null {
   const g = prune(globalHits, MIN, now);
   globalHits.length = 0;
   globalHits.push(...g);
-  if (globalHits.length >= GLOBAL_PER_MIN) return "Busy right now — try again in a minute.";
+  if (globalHits.length >= GLOBAL_PER_MIN) return "Busy right now. Try again in a minute.";
 
   const arr = prune(hitsByIp.get(ip) ?? [], HOUR, now);
   const inLastMin = arr.filter((t) => t >= now - MIN).length;
-  if (inLastMin >= PER_IP_PER_MIN) return "Slow down a sec — too many swings this minute.";
-  if (arr.length >= PER_IP_PER_HOUR) return "You've hit the hourly limit — come back later.";
+  if (inLastMin >= PER_IP_PER_MIN) return "Slow down a sec. Too many swings this minute.";
+  if (arr.length >= PER_IP_PER_HOUR) return "You've hit the hourly limit. Come back later.";
 
   arr.push(now);
   hitsByIp.set(ip, arr);
