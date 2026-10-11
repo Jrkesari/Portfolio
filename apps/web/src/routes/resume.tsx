@@ -1,5 +1,6 @@
 import { resume, site } from "@jrk/content";
 import { createFileRoute } from "@tanstack/react-router";
+import { Seo } from "@/components/Seo";
 
 export const Route = createFileRoute("/resume")({
   component: Resume,
@@ -8,7 +9,13 @@ export const Route = createFileRoute("/resume")({
 function Resume() {
   return (
     <main className="resume shell pt-32 pb-10 md:pt-40">
-      <title>Résumé · Jayesh Ranjan Kesari</title>
+      <Seo
+        title="Résumé · Jayesh Ranjan Kesari"
+        description="One-page résumé of Jayesh Ranjan Kesari, AI engineer: agent runtimes, MCP tool servers and LLM infrastructure. Also as PDF, JSON and Markdown."
+        path="/resume"
+        kind="ProfilePage"
+        crumbs={[{ name: "Résumé", path: "/resume" }]}
+      />
       <div className="no-print mx-auto mb-10 flex max-w-[50rem] flex-wrap items-center justify-between gap-4">
         <p className="label">résumé · one page, printable</p>
         <div className="mono flex gap-4 text-[12px]">

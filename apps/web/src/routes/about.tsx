@@ -3,6 +3,7 @@ import { Earlier } from "@/components/home/Earlier";
 import { PathLog } from "@/components/home/PathLog";
 import { Toolbox } from "@/components/home/Toolbox";
 import { PageHead } from "@/components/PageHead";
+import { Seo } from "@/components/Seo";
 
 export const Route = createFileRoute("/about")({
   component: About,
@@ -11,10 +12,12 @@ export const Route = createFileRoute("/about")({
 function About() {
   return (
     <main className="pt-32 md:pt-40">
-      <title>About · Jayesh Ranjan Kesari</title>
-      <meta
-        name="description"
-        content="How I got here, what I reach for, and the smaller things I built before the day job."
+      <Seo
+        title="About · Jayesh Ranjan Kesari"
+        description="How I got here, what I reach for, and the smaller things I built before the day job."
+        path="/about"
+        kind="AboutPage"
+        crumbs={[{ name: "About", path: "/about" }]}
       />
       <div className="shell">
         <PageHead

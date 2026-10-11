@@ -6,7 +6,7 @@
     "useIgnoreFile": true
   },
   "files": {
-    "includes": ["**", "!**/routeTree.gen.ts", "!**/dist", "!**/public", "!**/*.css"]
+    "includes": ["**", "!**/routeTree.gen.ts", "!**/dist", "!**/dist-ssr", "!**/public", "!**/*.css"]
   },
   "formatter": {
     "indentStyle": "space",

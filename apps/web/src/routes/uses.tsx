@@ -1,6 +1,7 @@
 import { uses } from "@jrk/content";
 import { createFileRoute } from "@tanstack/react-router";
 import { PageHead } from "@/components/PageHead";
+import { Seo } from "@/components/Seo";
 import { inline } from "@/lib/inline";
 
 export const Route = createFileRoute("/uses")({
@@ -10,7 +11,12 @@ export const Route = createFileRoute("/uses")({
 function Uses() {
   return (
     <main className="shell pt-32 pb-10 md:pt-40">
-      <title>Uses · Jayesh Ranjan Kesari</title>
+      <Seo
+        title="Uses · Jayesh Ranjan Kesari"
+        description="The tools I work with every day, and the habits around them. Nothing here is sponsored; most of it is boring on purpose."
+        path="/uses"
+        crumbs={[{ name: "Uses", path: "/uses" }]}
+      />
       <PageHead
         label="uses"
         title="What I work with"

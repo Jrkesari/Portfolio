@@ -897,6 +897,16 @@
 }
 
 /* ------------------------------------------------------------------ entrances (CSS only) */
+/* The prerendered page holds its entrances still until the live one replaces it
+   (index.html lets them run when there is no JavaScript to do that),
+   so they play once, from the start. */
+#root[data-prerendered] * {
+  animation-play-state: paused;
+}
+/* Its counters hold the final value for crawlers; on screen they wait to count up. */
+#root[data-prerendered] .tick {
+  opacity: 0;
+}
 @media (prefers-reduced-motion: no-preference) {
   .rise {
     animation: rise 1s var(--ease-lazy) backwards;

@@ -9,7 +9,7 @@ A Turborepo + pnpm workspace.
 │   └── web/                 the site: Vite, React 19, TanStack Router, Tailwind 4, Lenis, cmdk
 │       ├── src/routes/      file-based routes (code-split)
 │       ├── src/components/  home sections, layout (header, ⌘K palette, tl;dr, screensaver)
-│       ├── scripts/         generate.ts → llms.txt, resume.json/.md, sitemap.xml; contributions.ts → GitHub counts
+│       ├── scripts/         generate.ts → llms.txt, resume.json/.md, sitemap.xml, feed.xml; prerender.ts → every page as HTML; contributions.ts → GitHub counts
 │       └── public/fonts/    subset, self-hosted fonts (see OFL.txt)
 ├── packages/
 │   ├── ascii/               box-drawing diagram engine: parser, React renderer, styles, tests
@@ -33,7 +33,10 @@ Node 22 (`.node-version`), pnpm 10 with the isolated linker: the same layout Ver
 that isn't declared fails here first. On Windows, keep the checkout's path short (about 110 characters or less):
 node.exe isn't long-path aware, and the isolated store nests deep enough for `vite build` to trip over it.
 
-`generate` is pure and cached: the same content always writes the same `llms.txt`, `resume.json` and `sitemap.xml`.
+`generate` is pure and cached: the same content always writes the same `llms.txt`, `resume.json`, `sitemap.xml` and
+`feed.xml`. `build` then prerenders every page in the sitemap to static HTML with its own title, description,
+canonical and JSON-LD (`scripts/prerender.ts`), so crawlers that don't run JavaScript read the real page, and an
+unknown path is a real 404.
 The GitHub contribution counts are the build's one network call, so they run uncached after every build and write
 into `dist/` directly; if the API is down, the page falls back to the last numbers it knew.
 

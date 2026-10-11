@@ -5,12 +5,8 @@
   "buildCommand": "pnpm turbo run build contributions --filter=@jrk/web",
   "outputDirectory": "apps/web/dist",
   "devCommand": "pnpm turbo run dev --filter=@jrk/web -- --port $PORT",
-  "rewrites": [
-    {
-      "source": "/((?!api/).*)",
-      "destination": "/index.html"
-    }
-  ],
+  "cleanUrls": true,
+  "trailingSlash": false,
   "headers": [
     {
       "source": "/(.*)",

@@ -1,3 +1,4 @@
+import { site } from "@jrk/content";
 import { createFileRoute } from "@tanstack/react-router";
 import { Hero } from "@/components/home/Hero";
 import { NotesPreview } from "@/components/home/NotesPreview";
@@ -5,6 +6,7 @@ import { Receipt } from "@/components/home/Receipt";
 import { RulesLog } from "@/components/home/RulesLog";
 import { TurnReplay } from "@/components/home/TurnReplay";
 import { WorkIndex } from "@/components/home/WorkIndex";
+import { person, Seo, website } from "@/components/Seo";
 
 export const Route = createFileRoute("/")({
   component: Home,
@@ -18,7 +20,14 @@ const FEATURED_RULES = ["unmeasured", "authority", "measure", "position", "root-
 function Home() {
   return (
     <main>
-      <title>Jayesh Ranjan Kesari · AI Engineer</title>
+      <Seo
+        title={`${site.name} · ${site.role}`}
+        description={site.description}
+        path="/"
+        type="profile"
+        kind="ProfilePage"
+        graph={[website, person]}
+      />
       <Hero />
       <WorkIndex />
       <TurnReplay n="02" />

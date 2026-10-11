@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useRef, useState } from "react";
+import { Seo } from "@/components/Seo";
 import { golfRounds } from "@/data/promptGolf";
 
 // Prompt golf — kept from the previous version of the site, off the main path.
@@ -83,7 +84,12 @@ function Play() {
 
   return (
     <main className="shell pt-32 pb-10 md:pt-40">
-      <title>Prompt golf · Jayesh Ranjan Kesari</title>
+      <Seo
+        title="Prompt golf · Jayesh Ranjan Kesari"
+        description="Write the shortest prompt that makes a real model say exactly what's asked. Fewer words wins. Runs live on a 14B open model."
+        path="/play"
+        crumbs={[{ name: "Prompt golf", path: "/play" }]}
+      />
       <div className="mx-auto max-w-[44rem]">
         <p className="label">
           play · {Object.keys(cleared).length}/{golfRounds.length} cleared

@@ -2,6 +2,7 @@ import { now } from "@jrk/content";
 import { createFileRoute } from "@tanstack/react-router";
 import { Clock } from "@/components/layout/Clock";
 import { PageHead } from "@/components/PageHead";
+import { Seo } from "@/components/Seo";
 import { inline } from "@/lib/inline";
 
 export const Route = createFileRoute("/now")({
@@ -34,7 +35,12 @@ function Now() {
   });
   return (
     <main className="shell pt-32 pb-10 md:pt-40">
-      <title>Now · Jayesh Ranjan Kesari</title>
+      <Seo
+        title="Now · Jayesh Ranjan Kesari"
+        description="What has my attention this month: what I'm building, what I'm thinking about, and what I do off the clock."
+        path="/now"
+        crumbs={[{ name: "Now", path: "/now" }]}
+      />
       <PageHead
         label={`now · updated ${updated}`}
         title="What I'm doing now"

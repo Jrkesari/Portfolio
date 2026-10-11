@@ -1,5 +1,6 @@
 import { notes } from "@jrk/content";
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { Seo } from "@/components/Seo";
 
 export const Route = createFileRoute("/notes/")({
   component: NotesIndex,
@@ -11,10 +12,12 @@ const fmt = (d: string) =>
 function NotesIndex() {
   return (
     <main className="shell pt-32 pb-10 md:pt-40">
-      <title>Notes · Jayesh Ranjan Kesari</title>
-      <meta
-        name="description"
-        content="Field notes on building agents: cost, safety, retrieval and the decisions behind them."
+      <Seo
+        title="Notes · Jayesh Ranjan Kesari"
+        description="Field notes on building agents: cost, safety, retrieval and the decisions behind them."
+        path="/notes"
+        kind="CollectionPage"
+        crumbs={[{ name: "Notes", path: "/notes" }]}
       />
       <p className="label">notes</p>
       <h1 className="mt-5 max-w-[16ch] font-serif text-[clamp(2.6rem,7vw,5rem)] leading-[0.95] font-light tracking-[-0.04em]">

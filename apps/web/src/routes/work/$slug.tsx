@@ -2,6 +2,7 @@ import { type CaseSection, provenanceNote, systems } from "@jrk/content";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { SteppedFigure } from "@/components/ascii/SteppedFigure";
 import { ReadingProgress } from "@/components/ReadingProgress";
+import { absolute, author, Seo } from "@/components/Seo";
 import { Ticker } from "@/components/Ticker";
 import { TraceReplay } from "@/components/TraceReplay";
 import { useInViewOnce } from "@/lib/hooks";
@@ -70,8 +71,29 @@ function CaseStudy() {
 
   return (
     <main className="shell pt-32 pb-10 md:pt-40">
-      <title>{`${s.name} · Jayesh Ranjan Kesari`}</title>
-      <meta name="description" content={s.oneLiner} />
+      <Seo
+        title={`${s.name} · Jayesh Ranjan Kesari`}
+        description={s.oneLiner}
+        path={`/work/${s.slug}`}
+        type="article"
+        tags={s.stack}
+        graph={[
+          {
+            "@type": "TechArticle",
+            "@id": `${absolute(`/work/${s.slug}`)}#article`,
+            headline: s.name,
+            description: s.oneLiner,
+            abstract: s.summary,
+            author,
+            publisher: author,
+            image: absolute("/og-image.png"),
+            mainEntityOfPage: absolute(`/work/${s.slug}`),
+            keywords: s.stack.join(", "),
+            inLanguage: "en",
+          },
+        ]}
+        crumbs={[{ name: s.name, path: `/work/${s.slug}` }]}
+      />
       <ReadingProgress />
 
       <Link to="/" hash="work" className="mono text-[12px] text-graphite transition-colors hover:text-ink">

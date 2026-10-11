@@ -5,6 +5,7 @@ node_modules/
 
 # builds
 dist/
+dist-ssr/
 build/
 coverage/
 
@@ -18,6 +19,7 @@ apps/web/public/resume.json
 apps/web/public/resume.md
 apps/web/public/contributions.json
 apps/web/public/sitemap.xml
+apps/web/public/feed.xml
 
 # env (never commit secrets)
 .env

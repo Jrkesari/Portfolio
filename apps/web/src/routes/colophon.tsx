@@ -2,6 +2,7 @@ import { inspirations, site } from "@jrk/content";
 import { createFileRoute } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { PageHead } from "@/components/PageHead";
+import { Seo } from "@/components/Seo";
 
 export const Route = createFileRoute("/colophon")({
   component: Colophon,
@@ -106,7 +107,12 @@ function Colophon() {
   const groups = [...new Set(inspirations.map((i) => i.group))];
   return (
     <main className="shell pt-32 pb-10 md:pt-40">
-      <title>Colophon · Jayesh Ranjan Kesari</title>
+      <Seo
+        title="Colophon · Jayesh Ranjan Kesari"
+        description="How this site is made: every version of it, the stack, the fonts, the ASCII figures and the rules it keeps for speed and privacy."
+        path="/colophon"
+        crumbs={[{ name: "Colophon", path: "/colophon" }]}
+      />
       <PageHead
         label="colophon"
         title="How this site is made"

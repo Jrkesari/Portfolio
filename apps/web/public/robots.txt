@@ -1,4 +1,6 @@
+# Everyone is welcome: search engines, link previews and AI assistants alike.
 User-agent: *
 Allow: /
+Disallow: /api/
 
 Sitemap: https://jayesh.cv/sitemap.xml

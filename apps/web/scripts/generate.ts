@@ -2,12 +2,14 @@
 //   public/llms.txt     — for language models and people who like text
 //   public/resume.json  — JSON Resume (jsonresume.org), the same facts as /resume
 //   public/resume.md    — the same again, as Markdown, for agents and copy-paste
-//   public/sitemap.xml  — every route, from the same slugs the router uses
+//   public/sitemap.xml  — every page, from the same list the build prerenders
+//   public/feed.xml     — the notes, as RSS
 // Pure: the same content always writes the same files, so turbo can cache it.
-// Runs before `dev` and `build` (see turbo.json). All three are gitignored.
+// Runs before `dev` and `build` (see turbo.json). All of them are gitignored.
 import { writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { hero, notes, resume, rules, site, systems } from "@jrk/content";
+import { pages } from "./routes.ts";
 
 const out = (name: string) => fileURLToPath(new URL(`../public/${name}`, import.meta.url));
 const plain = (s: string) => s.replace(/\*\*|==|`|\*/g, "").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1");
@@ -127,25 +129,49 @@ const md = [
 writeFileSync(out("resume.md"), md, "utf8");
 console.log("resume.md written");
 
-// The sitemap, from the same slugs the router uses — so a renamed page can't linger.
-const routes = [
-  "/",
-  ...systems.map((s) => `/work/${s.slug}`),
-  "/thinking",
-  "/about",
-  "/notes",
-  ...notes.map((n) => `/notes/${n.slug}`),
-  "/now",
-  "/uses",
-  "/resume",
-  "/colophon",
-];
+// The sitemap, from the same list the build prerenders.
 const sitemap = [
   `<?xml version="1.0" encoding="UTF-8"?>`,
   `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">`,
-  ...routes.map((r) => `  <url><loc>${site.url}${r}</loc></url>`),
+  ...pages.map(
+    (p) =>
+      `  <url><loc>${site.url}${p.path === "/" ? "/" : p.path}</loc>${p.lastmod ? `<lastmod>${p.lastmod}</lastmod>` : ""}</url>`,
+  ),
   `</urlset>`,
   "",
 ].join("\n");
 writeFileSync(out("sitemap.xml"), sitemap, "utf8");
-console.log(`sitemap.xml: ${routes.length} routes`);
+console.log(`sitemap.xml: ${pages.length} pages`);
+
+// The notes as RSS 2.0, for feed readers and anyone who'd rather not check back.
+const xml = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+const rfc822 = (d: string) => new Date(`${d}T00:00:00+05:30`).toUTCString();
+const latest = [...notes].sort((a, b) => b.date.localeCompare(a.date));
+const feed = [
+  `<?xml version="1.0" encoding="UTF-8"?>`,
+  `<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">`,
+  "  <channel>",
+  `    <title>Notes · ${xml(site.name)}</title>`,
+  `    <link>${site.url}/notes</link>`,
+  `    <description>Field notes on building agents: cost, safety, retrieval and the decisions behind them.</description>`,
+  "    <language>en</language>",
+  `    <atom:link href="${site.url}/feed.xml" rel="self" type="application/rss+xml" />`,
+  ...(latest[0] ? [`    <lastBuildDate>${rfc822(latest[0].date)}</lastBuildDate>`] : []),
+  ...latest.map((n) =>
+    [
+      "    <item>",
+      `      <title>${xml(n.title)}</title>`,
+      `      <link>${site.url}/notes/${n.slug}</link>`,
+      `      <guid isPermaLink="true">${site.url}/notes/${n.slug}</guid>`,
+      `      <pubDate>${rfc822(n.date)}</pubDate>`,
+      `      <description>${xml(plain(n.summary))}</description>`,
+      ...n.tags.map((t) => `      <category>${xml(t)}</category>`),
+      "    </item>",
+    ].join("\n"),
+  ),
+  "  </channel>",
+  "</rss>",
+  "",
+].join("\n");
+writeFileSync(out("feed.xml"), feed, "utf8");
+console.log(`feed.xml: ${notes.length} notes`);

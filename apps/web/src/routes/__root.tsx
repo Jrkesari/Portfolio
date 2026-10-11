@@ -7,6 +7,7 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { RouteError } from "@/components/RouteError";
+import { Seo } from "@/components/Seo";
 import { sayHello } from "@/lib/console";
 import { useOverlay } from "@/lib/ui";
 
@@ -47,6 +48,12 @@ function RootLayout() {
 function NotFound() {
   return (
     <main className="shell min-h-[70vh] pt-40">
+      <Seo
+        title="Not found · Jayesh Ranjan Kesari"
+        description="That path doesn't route anywhere on this site."
+        path="/404"
+        noindex
+      />
       <p className="label mb-6">404</p>
       <pre className="mono mb-8 text-[13px] leading-[1.2] text-graphite">{String.raw`┌──────────┐      ┌──────────┐
 │   you    │──╳──▶│ nowhere  │

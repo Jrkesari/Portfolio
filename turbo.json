@@ -5,7 +5,7 @@
     "generate": {
       "dependsOn": ["^typecheck"],
       "inputs": ["scripts/generate.ts", "$TURBO_ROOT$/packages/content/src/**"],
-      "outputs": ["public/llms.txt", "public/resume.json", "public/resume.md", "public/sitemap.xml"]
+      "outputs": ["public/llms.txt", "public/resume.json", "public/resume.md", "public/sitemap.xml", "public/feed.xml"]
     },
     "build": {
       "dependsOn": ["^build", "generate"],

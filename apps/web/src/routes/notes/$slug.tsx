@@ -2,6 +2,7 @@ import { notes } from "@jrk/content";
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { NoteBody } from "@/components/NoteBody";
 import { ReadingProgress } from "@/components/ReadingProgress";
+import { absolute, author, Seo } from "@/components/Seo";
 
 export const Route = createFileRoute("/notes/$slug")({
   loader: ({ params }) => {
@@ -23,8 +24,34 @@ function NotePage() {
   const next = notes[(index + 1) % notes.length];
   return (
     <main className="shell pt-32 pb-10 md:pt-40">
-      <title>{`${n.title} · Jayesh Ranjan Kesari`}</title>
-      <meta name="description" content={n.summary} />
+      <Seo
+        title={`${n.title} · Jayesh Ranjan Kesari`}
+        description={n.summary}
+        path={`/notes/${n.slug}`}
+        type="article"
+        published={n.date}
+        tags={n.tags}
+        graph={[
+          {
+            "@type": "BlogPosting",
+            "@id": `${absolute(`/notes/${n.slug}`)}#article`,
+            headline: n.title,
+            description: n.summary,
+            datePublished: `${n.date}T00:00:00+05:30`,
+            author,
+            publisher: author,
+            image: `${absolute("/og-image.png")}`,
+            mainEntityOfPage: absolute(`/notes/${n.slug}`),
+            keywords: n.tags.join(", "),
+            timeRequired: `PT${n.minutes}M`,
+            inLanguage: "en",
+          },
+        ]}
+        crumbs={[
+          { name: "Notes", path: "/notes" },
+          { name: n.title, path: `/notes/${n.slug}` },
+        ]}
+      />
       <ReadingProgress />
       <article className="mx-auto max-w-[40rem]">
         <Link to="/notes" className="mono text-[12px] text-graphite transition-colors hover:text-ink">

@@ -51,8 +51,17 @@ declare module "@tanstack/react-router" {
 const rootEl = document.getElementById("root");
 if (!rootEl) throw new Error("Root element not found");
 
-createRoot(rootEl).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>,
-);
+// A built page arrives prerendered (scripts/prerender.ts): its HTML is already there for
+// crawlers and the first paint, with entrances held still. Load the route's code first, so
+// the page is swapped for the live one in a single step, never through a blank screen.
+const mount = () => {
+  for (const el of document.head.querySelectorAll("[data-prerendered]")) el.remove();
+  rootEl.removeAttribute("data-prerendered");
+  createRoot(rootEl).render(
+    <StrictMode>
+      <RouterProvider router={router} />
+    </StrictMode>,
+  );
+};
+if (rootEl.hasAttribute("data-prerendered")) router.load().then(mount, mount);
+else mount();

@@ -51,7 +51,10 @@ export function Ticker({ value, from, start, delay = 0, duration = 1000 }: Props
   const origin = parsed && to && parsed.head === to.head && parsed.tail === to.tail ? parsed : null;
   const fromN = origin?.n ?? 0;
   const decimals = Math.max(to?.decimals ?? 0, origin?.decimals ?? 0);
-  const [text, setText] = useState(() => (to && !reduced && fromN !== to.n ? show(to, fromN, decimals) : value));
+  // Prerendered at build time, it's the final value: that's what a crawler should read.
+  const [text, setText] = useState(() =>
+    typeof window !== "undefined" && to && !reduced && fromN !== to.n ? show(to, fromN, decimals) : value,
+  );
   const done = useRef(false);
 
   // `to` and `origin` are parsed afresh each render from the same strings, so the strings are the deps.
@@ -79,7 +82,9 @@ export function Ticker({ value, from, start, delay = 0, duration = 1000 }: Props
 
   return (
     <>
-      <span aria-hidden>{text}</span>
+      <span aria-hidden className="tick">
+        {text}
+      </span>
       <span className="sr-only">{value}</span>
     </>
   );
