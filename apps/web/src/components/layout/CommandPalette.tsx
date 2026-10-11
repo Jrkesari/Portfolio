@@ -43,13 +43,20 @@ export function CommandPalette() {
       heading: "Go to",
       items: [
         { id: "home", label: "Home", hint: "/", run: go("/") },
-        { id: "work", label: "Selected work", hint: "/#work", run: go("/", "work") },
+        { id: "work", label: "Selected work", hint: "/work", run: go("/work") },
         {
           id: "turn",
           label: "Anatomy of a turn",
-          hint: "/#turn",
+          hint: "/work#turn",
           keywords: ["architecture", "agent loop"],
-          run: go("/", "turn"),
+          run: go("/work", "turn"),
+        },
+        {
+          id: "numbers",
+          label: "What it added up to",
+          hint: "/work#numbers",
+          keywords: ["receipts", "impact", "metrics"],
+          run: go("/work", "numbers"),
         },
         {
           id: "thinking",
@@ -208,7 +215,7 @@ export function CommandPalette() {
         />
         <kbd className="mono rounded border border-rule px-1.5 py-0.5 text-[10.5px] text-graphite">esc</kbd>
       </div>
-      <Command.List className="cmdk-list" data-lenis-prevent>
+      <Command.List className="cmdk-list">
         <Command.Empty className="mono px-4 py-6 text-[12.5px] text-graphite">
           Nothing by that name. Try “agent”, “notes” or “email”.
         </Command.Empty>

@@ -7,6 +7,7 @@ export type Page = { path: string; lastmod?: string };
 // lastmod only where the content carries a real date; a guessed one teaches crawlers to ignore it.
 export const pages: Page[] = [
   { path: "/" },
+  { path: "/work" },
   ...systems.map((s) => ({ path: `/work/${s.slug}` })),
   { path: "/thinking" },
   { path: "/about" },

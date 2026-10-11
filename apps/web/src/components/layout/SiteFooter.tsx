@@ -18,21 +18,14 @@ export function SiteFooter() {
   };
 
   return (
-    <footer id="contact" className="no-print relative mt-32 border-t border-rule">
-      <div className="shell pt-20 pb-10">
+    <footer id="contact" className="no-print relative mt-24 border-t border-rule">
+      <div className="shell pt-14 pb-10">
         <div className="grid gap-12 md:grid-cols-[1.4fr_1fr]">
           <div>
-            <p className="label mb-6">say hello</p>
-            <h2 className="font-serif text-[clamp(2.4rem,6vw,4.6rem)] leading-[0.98] font-light tracking-[-0.035em]">
-              If you're building
-              <br />
-              agents, <span className="text-neel">write to me.</span>
-            </h2>
-            <p className="mt-6 max-w-md text-ink-2">
-              Questions about something here, a system you're stuck on, or work: email is the fastest way to reach me.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a href={`mailto:${site.email}`} className="link font-serif text-[1.35rem]">
+            <p className="label mb-4">contact</p>
+            <p className="max-w-md text-ink-2">Email is the fastest way to reach me.</p>
+            <div className="mt-4 flex flex-wrap items-center gap-3">
+              <a href={`mailto:${site.email}`} className="link font-serif text-[1.15rem]">
                 {site.email}
               </a>
               <button
@@ -84,6 +77,7 @@ export function SiteFooter() {
               <p className="label mb-3">around here</p>
               {(
                 [
+                  ["/work", "Work"],
                   ["/thinking", "Thinking"],
                   ["/about", "About"],
                   ["/notes", "Notes"],
@@ -100,7 +94,7 @@ export function SiteFooter() {
           </div>
         </div>
 
-        <div className="mono mt-20 flex flex-col gap-4 border-t border-rule pt-6 text-[11.5px] text-graphite md:flex-row md:items-center md:justify-between">
+        <div className="mono mt-14 flex flex-col gap-4 border-t border-rule pt-6 text-[11.5px] text-graphite md:flex-row md:items-center md:justify-between">
           <p>
             © {new Date().getFullYear()} {site.name} · made in {site.city}
           </p>

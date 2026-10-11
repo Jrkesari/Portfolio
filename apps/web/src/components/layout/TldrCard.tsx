@@ -36,7 +36,6 @@ export function TldrCard() {
         aria-modal="true"
         aria-labelledby="tldr-title"
         className="index-card relative w-full max-w-[560px] animate-[card-in_0.18s_ease-out_both] p-7 sm:p-9"
-        data-lenis-prevent
       >
         <div className="mb-5 flex items-start justify-between gap-4">
           <p className="label">tl;dr · the 20 second version</p>

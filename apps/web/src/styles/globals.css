@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import "lenis/dist/lenis.css";
 @import "@jrk/ascii/styles.css";
 
 /* Workspace packages ship TSX with class names; let Tailwind see them. */

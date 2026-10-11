@@ -5,7 +5,6 @@ import { Overlays } from "@/components/layout/Overlays";
 import { ScrollJump } from "@/components/layout/ScrollJump";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteHeader } from "@/components/layout/SiteHeader";
-import { SmoothScroll } from "@/components/layout/SmoothScroll";
 import { RouteError } from "@/components/RouteError";
 import { Seo } from "@/components/Seo";
 import { sayHello } from "@/lib/console";
@@ -23,7 +22,7 @@ function RootLayout() {
   // screen readers. (The palette's dialog does this itself; the screensaver is decorative.)
   const modal = useOverlay() === "tldr";
   return (
-    <SmoothScroll>
+    <>
       <div inert={modal}>
         <a
           href="#main"
@@ -41,7 +40,7 @@ function RootLayout() {
       </div>
       <Overlays />
       <p id="route-announcer" className="sr-only" aria-live="polite" />
-    </SmoothScroll>
+    </>
   );
 }
 

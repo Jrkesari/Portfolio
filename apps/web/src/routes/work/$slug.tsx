@@ -96,7 +96,7 @@ function CaseStudy() {
       />
       <ReadingProgress />
 
-      <Link to="/" hash="work" className="mono text-[12px] text-graphite transition-colors hover:text-ink">
+      <Link to="/work" className="mono text-[12px] text-graphite transition-colors hover:text-ink">
         ← all work
       </Link>
 

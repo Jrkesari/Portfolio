@@ -18,7 +18,6 @@ export function Toolbox({ n = "02" }: { n?: string }) {
       <div
         ref={ref}
         className="mt-12 overflow-x-auto rounded-[6px] border border-rule bg-card/60 p-5 sm:p-7"
-        data-lenis-prevent
         // biome-ignore lint/a11y/noNoninteractiveTabindex: a scroller must be reachable by keyboard (WCAG 2.1.1)
         tabIndex={0}
         role="region"

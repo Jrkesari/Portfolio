@@ -6,7 +6,7 @@ import { toggleTheme, useTheme } from "@/lib/theme";
 import { openPalette } from "@/lib/ui";
 
 const nav = [
-  { label: "work", to: "/", hash: "work" },
+  { label: "work", to: "/work" },
   { label: "thinking", to: "/thinking" },
   { label: "notes", to: "/notes" },
   { label: "about", to: "/about" },
@@ -57,9 +57,8 @@ export function SiteHeader() {
             <Link
               key={item.label}
               to={item.to}
-              {...("hash" in item ? { hash: item.hash } : {})}
               className="font-serif text-[15.5px] text-graphite transition-colors hover:text-ink"
-              activeOptions={{ exact: true, includeHash: true }}
+              activeOptions={{ exact: true }}
               activeProps={{ className: "text-ink underline decoration-neel underline-offset-[6px]" }}
             >
               {item.label}

@@ -35,13 +35,14 @@ function FigurePane({ system }: { system: System }) {
   );
 }
 
-export function WorkIndex() {
+/** `more` adds the way on to /work, where the replay and the numbers live. */
+export function WorkIndex({ n = "01", more = false }: { n?: string; more?: boolean }) {
   const [active, setActive] = useState<System>(systems[0]);
 
   return (
     <section id="work" className="shell py-16 md:py-24" aria-labelledby="work-title">
       <SectionHead
-        n="01"
+        n={n}
         id="work-title"
         kicker="selected work"
         title="Systems I built"
@@ -93,6 +94,13 @@ export function WorkIndex() {
           <FigurePane system={active} />
         </aside>
       </div>
+      {more && (
+        <p className="mt-8">
+          <Link to="/work" className="link mono text-[12.5px]">
+            One of them taken apart, and what they added up to →
+          </Link>
+        </p>
+      )}
     </section>
   );
 }
