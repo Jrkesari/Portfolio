@@ -9,7 +9,7 @@ export const site = {
   repo: "https://github.com/Jrkesari/Portfolio",
   socials: [
     { label: "GitHub", handle: "@Jrkesari", href: "https://github.com/Jrkesari" },
-    { label: "LinkedIn", handle: "in/jayesh-ranjan-kesari", href: "https://www.linkedin.com/in/jayesh-ranjan-kesari-2573b3252/" },
+    { label: "LinkedIn", handle: "in/jrkesari", href: "https://www.linkedin.com/in/jrkesari" },
     { label: "X", handle: "@me_jayeshrkesar", href: "https://x.com/me_jayeshrkesar" },
   ],
 } as const;
