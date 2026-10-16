@@ -1,6 +1,6 @@
 {
   "name": "jrk-portfolio",
-  "version": "3.1.0",
+  "version": "3.1.1",
   "private": true,
   "type": "module",
   "description": "Jayesh Ranjan Kesari — portfolio. Turborepo + pnpm workspace.",
