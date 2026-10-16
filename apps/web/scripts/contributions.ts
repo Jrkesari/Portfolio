@@ -1,7 +1,8 @@
-// GitHub contributions per year, from the public calendar — fetched at build time
-// so visitors' browsers never call a third party. This is the build's only network
-// call, so it lives outside the cached tasks: turbo runs it after every build
-// (see turbo.json) and it writes into dist/ as well as public/.
+// GitHub contributions per year, from the public calendar, snapshotted at build time.
+// The page asks api/contributions.ts first (live, CDN-cached) and falls back to this
+// file, so it only has to be roughly right. This is the build's only network call,
+// so it lives outside the cached tasks: turbo runs it after every build (see
+// turbo.json) and it writes into dist/ as well as public/.
 // If the API is down, whatever was there stays — or the page uses its own fallback.
 import { existsSync, writeFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";

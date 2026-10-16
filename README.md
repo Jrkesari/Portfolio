@@ -15,7 +15,7 @@ A Turborepo + pnpm workspace.
 │   ├── ascii/               box-drawing diagram engine: parser, React renderer, styles, tests
 │   ├── content/             everything the site says, as typed data, with contract tests
 │   └── tsconfig/            shared compiler settings
-├── api/                     Vercel functions (prompt golf)
+├── api/                     Vercel functions (prompt golf, live GitHub counts)
 └── turbo.json               generate → build → contributions; typecheck, test, dev
 ```
 
